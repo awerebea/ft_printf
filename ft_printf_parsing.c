@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_pars_functions.c                                 :+:      :+:    :+:   */
+/*   ft_printf_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 00:40:37 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/28 00:50:14 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static int	f_pars_opts(va_list ap, const char *format, int *i)
 {
 	t_opts	opts;
 
-	(void)ap;
 	opts = f_init_opts();
 	*i += 1;
 	while (ft_strchr("-+ #0", format[*i]))
@@ -118,7 +117,6 @@ int			f_pars_format(va_list ap, const char *format)
 
 	i = 0;
 	count = 0;
-	(void)ap;
 	while (format[i])
 	{
 		if (format[i] != '%')
