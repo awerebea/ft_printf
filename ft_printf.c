@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/27 22:40:21 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/27 23:28:36 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int			f_putchar_count(char c)
 
 char		f_chk_flags_1(char flags)
 {
-	return ((flags & 17 != 17) && (flags & 12 != 12)) ? flags : NULL;
+	return (((flags & 17) != 17) && ((flags & 12) != 12)) ? flags : 0;
 }
 
-char		f_pars_flags(va_list ap, char c, char flags)
+char		f_pars_flags(char c, char flags)
 {
-	return (c == '-' && !(16 & flags)) ? f_chk_flags_1(flags + 16) : NULL;
-	return (c == '+' && !(8 & flags)) ? f_chk_flags_1(flags + 8) : NULL;
-	return (c == ' ' && !(4 & flags)) ? f_chk_flags_1(flags + 4) : NULL;
-	return (c == '#' && !(2 & flags)) ? f_chk_flags_1(flags + 2) : NULL;
-	return (c == '0' && !(1 & flags)) ? f_chk_flags_1(flags + 1) : NULL;
+	return (c == '-' && !(16 & flags)) ? f_chk_flags_1(flags + 16) : 0;
+	return (c == '+' && !(8 & flags)) ? f_chk_flags_1(flags + 8) : 0;
+	return (c == ' ' && !(4 & flags)) ? f_chk_flags_1(flags + 4) : 0;
+	return (c == '#' && !(2 & flags)) ? f_chk_flags_1(flags + 2) : 0;
+	return (c == '0' && !(1 & flags)) ? f_chk_flags_1(flags + 1) : 0;
 }
 
 t_opts		f_init_opts(void)
@@ -42,7 +42,7 @@ t_opts		f_init_opts(void)
 	opts.precision = 0;
 	opts.flags = 0;
 	opts.subspec = 0;
-	opts.opts_type = 0;
+	opts.specifier = 0;
 	return (opts);
 }
 
@@ -82,7 +82,7 @@ int			f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 	width = 0;
 	if (format[*i] == '*')
 	{
-		if ((width = va_arg(ap, int)) < 0);
+		if ((width = va_arg(ap, int)) < 0)
 		{
 			width *= -1;
 			opts->flags = opts->flags | 16;
@@ -100,10 +100,10 @@ int			f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 			*i += 1;
 		}
 	}
-	return (f_isspec(format, i, &opts) || format[*i] == '.') ? width : -1;
+	return (f_isspec(format, i, opts) || format[*i] == '.') ? width : -1;
 }
 
-int			f_pars_precisn(va_list ap, const char format, int *i, t_opts *opts)
+int			f_pars_precisn(va_list ap, const char *format, int *i, t_opts *opts)
 {
 	int		precision;
 
@@ -111,7 +111,7 @@ int			f_pars_precisn(va_list ap, const char format, int *i, t_opts *opts)
 	opts->flags += 32;
 	if (format[*i] == '*')
 	{
-		if ((precision = va_arg(ap, int)) < 0);
+		if ((precision = va_arg(ap, int)) < 0)
 			opts->flags -= 32;
 		*i += 1;
 	}
@@ -125,10 +125,16 @@ int			f_pars_precisn(va_list ap, const char format, int *i, t_opts *opts)
 			*i += 1;
 		}
 	}
-	return (f_isspec(format, i, &opts)) ? precision : -1;
+	return (f_isspec(format, i, opts)) ? precision : -1;
 }
 
-int			f_print_argument(va_list ap, t_opts opts, char specifier)
+int			f_print_argument(va_list ap, t_opts *opts, char specifier)
+{
+	(void)ap;
+	(void)opts;
+	(void)specifier;
+	return (0);
+}
 
 int			f_pars_opts(va_list ap, const char *format, int *i)
 {
@@ -139,7 +145,7 @@ int			f_pars_opts(va_list ap, const char *format, int *i)
 	*i += 1;
 	while (ft_strchr("-+ #0", format[*i]))
 	{
-		if (!(opts.flags = f_pars_flags(ap, format[*i], opts.flags)))
+		if (!(opts.flags = f_pars_flags(format[*i], opts.flags)))
 			return (-1);
 		*i += 1;
 	}
@@ -151,7 +157,7 @@ int			f_pars_opts(va_list ap, const char *format, int *i)
 	if (format[*i] == '.' && format[*i + 1])
 	{
 		*i += 1;
-		if ((opts.precision = f_pars_precisn(ap, format, i)) < 0)
+		if ((opts.precision = f_pars_precisn(ap, format, i, &opts)) < 0)
 			return (-1);
 	}
 	if (f_isspec(format, i, &opts))
@@ -174,7 +180,7 @@ int			f_pars_format(va_list ap, const char *format)
 			count += f_putchar_count(format[i]);
 		else if (format[i] == '%' && format[i + 1])
 		{
-			if ((tmp = f_pars_opts(ap, format, &i)) < 0);
+			if ((tmp = f_pars_opts(ap, format, &i)) < 0)
 				return (count);
 			count += tmp;
 		}
