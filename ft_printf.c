@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/27 21:45:03 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/27 22:40:21 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,38 @@ t_opts		f_init_opts(void)
 	opts.width = 0;
 	opts.precision = 0;
 	opts.flags = 0;
+	opts.subspec = 0;
 	opts.opts_type = 0;
 	return (opts);
 }
 
-int			f_is_specifier(char c)
+int			f_isspec(const char *format, int *i, t_opts *opts)
 {
-	return (ft_strchr("cCsdiuxXnfFgeE%", c)) ? 1 : 0;
+	if (format[*i] == 'l')
+	{
+		*i += 1;
+		opts->subspec = 8;
+		if (format[*i] == 'l')
+		{
+			*i += 1;
+			opts->subspec = 4;
+			return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
+		}
+		return (ft_strchr("cCsdiuxXnfFgeE", format[*i])) ? 1 : 0;
+	}
+	if (format[*i] == 'h')
+	{
+		*i += 1;
+		opts->subspec = 2;
+		if (format[*i] == 'h')
+		{
+			*i += 1;
+			opts->subspec = 1;
+			return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
+		}
+		return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
+	}
+	return (ft_strchr("cCsdiuxXnfFgeE%", format[*i])) ? 1 : 0;
 }
 
 int			f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
@@ -75,7 +100,7 @@ int			f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 			*i += 1;
 		}
 	}
-	return (f_is_specifier(format[*i]) || format[*i] == '.') ? width : -1;
+	return (f_isspec(format, i, &opts) || format[*i] == '.') ? width : -1;
 }
 
 int			f_pars_precisn(va_list ap, const char format, int *i, t_opts *opts)
@@ -100,8 +125,10 @@ int			f_pars_precisn(va_list ap, const char format, int *i, t_opts *opts)
 			*i += 1;
 		}
 	}
-	return (f_is_specifier(format[*i])) ? precision : -1;
+	return (f_isspec(format, i, &opts)) ? precision : -1;
 }
+
+int			f_print_argument(va_list ap, t_opts opts, char specifier)
 
 int			f_pars_opts(va_list ap, const char *format, int *i)
 {
@@ -127,8 +154,8 @@ int			f_pars_opts(va_list ap, const char *format, int *i)
 		if ((opts.precision = f_pars_precisn(ap, format, i)) < 0)
 			return (-1);
 	}
-	if (f_is_specifier(format[*i]))
-		return (f_print_argument(ap, &opts,));
+	if (f_isspec(format, i, &opts))
+		return (f_print_argument(ap, &opts, format[*i]));
 	return (-1);
 }
 

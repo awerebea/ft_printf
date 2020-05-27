@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/27 19:03:21 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/27 22:14:57 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct	s_opts
 	int		width;
 	int		precision;
 	char	flags;
+	char	subspec;
 	char	specifier;
 }				t_opts;
 
