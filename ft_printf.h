@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 14:43:09 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/29 00:20:44 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int				f_isspec(const char *format, int *i, t_opts *opts);
 int				f_pars_format(va_list ap, const char *format);
 int				f_print_argument(va_list ap, t_opts *opts, char specifier);
 int				f_putchar_count(char c);
+int				f_putstr_count(char *s, int len);
+int				f_putwstr_count(wchar_t *s, int len);
 int				f_print_char(va_list ap, t_opts *opts);
+int				f_print_str(va_list ap, t_opts *opts);
 t_opts			f_init_opts(int count);
 
 #endif

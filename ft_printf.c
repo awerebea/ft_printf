@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 15:18:33 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/28 18:16:44 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "libft.h"
 
 /*
-** if (specifier == 's')
-**     return (f_print_str(ap, opts));
 ** if (specifier == 'p')
 **     return (f_print_ptr(ap, opts));
 ** if (specifier == 'd' || specifier == 'i')
@@ -40,6 +38,8 @@ int				f_print_argument(va_list ap, t_opts *opts, char specifier)
 {
 	if (specifier == 'c' || specifier == 'C')
 		return (f_print_char(ap, opts));
+	if (specifier == 's')
+		return (f_print_str(ap, opts));
 	return (0);
 }
 
