@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 00:34:49 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/28 14:43:09 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 # define FT_PRINTF_H
 # include <stdarg.h>
+# include <wchar.h>
 
 typedef struct	s_opts
 {
 	int		width;
 	int		precision;
+	int		count_already_printed;
 	char	flags;
 	char	subspec;
 	char	specifier;
@@ -29,6 +31,7 @@ int				f_isspec(const char *format, int *i, t_opts *opts);
 int				f_pars_format(va_list ap, const char *format);
 int				f_print_argument(va_list ap, t_opts *opts, char specifier);
 int				f_putchar_count(char c);
-t_opts			f_init_opts(void);
+int				f_print_char(va_list ap, t_opts *opts);
+t_opts			f_init_opts(int count);
 
 #endif

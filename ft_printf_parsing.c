@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 00:50:14 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/28 14:17:57 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ static int	f_pars_precisn(va_list ap, const char *format, int *i, t_opts *opts)
 	return (f_isspec(format, i, opts)) ? precision : -1;
 }
 
-static int	f_pars_opts(va_list ap, const char *format, int *i)
+static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 {
 	t_opts	opts;
 
-	opts = f_init_opts();
+	opts = f_init_opts(count);
 	*i += 1;
 	while (ft_strchr("-+ #0", format[*i]))
 	{
@@ -123,12 +123,12 @@ int			f_pars_format(va_list ap, const char *format)
 			count += f_putchar_count(format[i]);
 		else if (format[i] == '%' && format[i + 1])
 		{
-			if ((tmp = f_pars_opts(ap, format, &i)) < 0)
-				return (count);
+			if ((tmp = f_pars_opts(ap, format, &i, count)) < 0)
+				return (-1);
 			count += tmp;
 		}
 		else
-			return (count);
+			return (-1);
 		i++;
 	}
 	return (count);

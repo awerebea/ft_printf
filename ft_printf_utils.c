@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 00:32:46 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/28 14:34:17 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@
 int				f_putchar_count(char c)
 {
 	write(0, &c, 1);
-	return (c == '\0') ? 0 : 1;
+	return (1);
 }
 
-t_opts			f_init_opts(void)
+t_opts			f_init_opts(int count)
 {
 	t_opts	opts;
 
 	opts.width = 0;
 	opts.precision = 0;
+	opts.count_already_printed = count;
 	opts.flags = 0;
 	opts.subspec = 0;
 	opts.specifier = 0;
@@ -43,7 +44,7 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 			opts->subspec = 4;
 			return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
 		}
-		return (ft_strchr("cCsdiuxXnfFgeE", format[*i])) ? 1 : 0;
+		return (ft_strchr("cCspdiuxXnfFgGeE", format[*i])) ? 1 : 0;
 	}
 	if (format[*i] == 'h')
 	{
@@ -57,5 +58,5 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 		}
 		return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
 	}
-	return (ft_strchr("cCsdiuxXnfFgeE%", format[*i])) ? 1 : 0;
+	return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 }
