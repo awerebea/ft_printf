@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:15:37 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/29 20:07:24 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/31 01:00:27 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,31 @@ static int		f_chk_wstr(wchar_t *ws)
 	return (1);
 }
 
+wchar_t			*f_wstrdup(const wchar_t *ws)
+{
+	wchar_t	*dest;
+	wchar_t *ws_bckp;
+	size_t	len;
+	size_t	i;
+
+	ws_bckp = (wchar_t*)ws;
+	len = (size_t)ws;
+	while (*ws)
+		ws++;
+	len = ((size_t)ws - len) / 4;
+	ws = ws_bckp;
+	if (!(dest = malloc(sizeof(wchar_t) * (len + 1))))
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = ws[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 static size_t	f_wstrlen(wchar_t *s)
 {
 	size_t	start;
@@ -38,18 +63,19 @@ static int		f_assist_wstr(wchar_t *val, t_opts *opts)
 {
 	int		count;
 	int		len;
+	wchar_t	*str;
 
 	count = 0;
-	if (!(f_chk_wstr((wchar_t*)val)))
+	str = (!(wchar_t*)val) ? f_wstrdup(L"(null)") : (wchar_t*)val;
+	if (!((wchar_t*)str) || !(f_chk_wstr((wchar_t*)str)))
 		return (-1);
-	len = (int)f_wstrlen((wchar_t*)val);
-	if ((opts->flags & 32) && opts->precision < len)
-		len = opts->precision;
+	len = (int)f_wstrlen((wchar_t*)str);
+	len = ((opts->flags & 32) && len > opts->prec && val) ? opts->prec : len;
 	if (opts->width > len)
 	{
 		if (opts->flags & 16)
 		{
-			count += f_putwstr_count((wchar_t*)val, len);
+			count += f_putwstr_count((wchar_t*)str, len);
 			while (count < opts->width)
 				count += f_putchar_count(' ');
 			return (count);
@@ -57,7 +83,8 @@ static int		f_assist_wstr(wchar_t *val, t_opts *opts)
 		while (count < opts->width - len)
 			count += f_putchar_count(' ');
 	}
-	count += f_putwstr_count((wchar_t*)val, len);
+	count += (val || opts->prec >= len || !(opts->flags & 32)) ? f_putwstr_count((wchar_t*)str, len) : 0;
+	(!val) ? free((wchar_t*)str) : 0;
 	return (count);
 }
 
@@ -65,18 +92,19 @@ static int		f_assist_str(char *val, t_opts *opts)
 {
 	int		count;
 	int		len;
+	char	*str;
 
 	count = 0;
-	if (!val)
-		val = "(null)";
-	len = (int)ft_strlen(val);
-	if ((opts->flags & 32) && opts->precision < len)
-		len = opts->precision;
+	str = (!val) ? ft_strdup("(null)") : val;
+	if (!(str))
+		return (-1);
+	len = (int)ft_strlen(str);
+	len = ((opts->flags & 32) && len > opts->prec && val) ? opts->prec : len;
 	if (opts->width > len)
 	{
 		if (opts->flags & 16)
 		{
-			count += f_putstr_count(val, len);
+			count += f_putstr_count(str, len);
 			while (count < opts->width)
 				count += f_putchar_count(' ');
 			return (count);
@@ -84,7 +112,8 @@ static int		f_assist_str(char *val, t_opts *opts)
 		while (count < opts->width - len)
 			count += f_putchar_count(' ');
 	}
-	count += f_putstr_count(val, len);
+	count += (val || opts->prec >= len || !(opts->flags & 32)) ? f_putstr_count(str, len) : 0;
+	(!val) ? free(str) : 0;
 	return (count);
 }
 

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/30 18:03:22 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/30 23:39:50 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ static int		f_print_int_assist(t_opts *opts, char *s, int val, int len)
 	if (val < 0)
 		count += f_putchar_count('-');
 	if (val == 0)
-		opts->precision++;
+		opts->prec++;
 	if (opts->flags & 1)
-		opts->precision = opts->width;
-	while (opts->precision-- > len)
+		opts->prec = opts->width;
+	while (opts->prec-- > len)
 		count += f_putchar_count('0');
 	if (val != 0 || !(opts->flags & 32))
 		count += (val < 0) ? f_putstr_count(++s, len) : f_putstr_count(s, len);
@@ -80,10 +80,10 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, int val, int len)
 	else
 	{
 		(val < 0 || (opts->flags & 12)) ? opts->width-- : 0;
-		if ((opts->width - len) > (opts->precision - len))
+		if ((opts->width - len) > (opts->prec - len))
 		{
-			while (opts->width-- > ((opts->precision > len) ? \
-						opts->precision : len))
+			while (opts->width-- > ((opts->prec > len) ? \
+						opts->prec : len))
 				count += f_putchar_count(' ');
 		}
 		count += f_print_int_assist(opts, s, val, len);

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/30 16:48:23 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/30 23:38:07 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ static int	f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 	return (f_isspec(format, i, opts) || format[*i] == '.') ? width : -1;
 }
 
-static int	f_pars_precisn(va_list ap, const char *format, int *i, t_opts *opts)
+static int	f_pars_prec(va_list ap, const char *format, int *i, t_opts *opts)
 {
-	int		precision;
+	int		prec;
 
-	precision = 0;
+	prec = 0;
 	opts->flags += 32;
 	if (format[*i] == '*')
 	{
-		if ((precision = va_arg(ap, int)) < 0)
+		if ((prec = va_arg(ap, int)) < 0)
 		{
-			precision = 0;
+			prec = 0;
 			opts->flags -= 32;
 		}
 		*i += 1;
@@ -75,13 +75,13 @@ static int	f_pars_precisn(va_list ap, const char *format, int *i, t_opts *opts)
 	{
 		while (ft_isdigit(format[*i]))
 		{
-			if ((precision * 10) < precision)
+			if ((prec * 10) < prec)
 				return (-1);
-			precision = precision * 10 + format[*i] - '0';
+			prec = prec * 10 + format[*i] - '0';
 			*i += 1;
 		}
 	}
-	return (f_isspec(format, i, opts)) ? precision : -1;
+	return (f_isspec(format, i, opts)) ? prec : -1;
 }
 
 static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
@@ -104,7 +104,7 @@ static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 	if (format[*i] == '.' && format[*i + 1])
 	{
 		*i += 1;
-		if ((opts.precision = f_pars_precisn(ap, format, i, &opts)) < 0)
+		if ((opts.prec = f_pars_prec(ap, format, i, &opts)) < 0)
 			return (-1);
 	}
 	if (f_isspec(format, i, &opts))

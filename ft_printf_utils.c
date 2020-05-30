@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/29 19:13:53 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/30 23:40:33 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ t_opts			f_init_opts(int count)
 	t_opts	opts;
 
 	opts.width = 0;
-	opts.precision = 0;
+	opts.prec = 0;
 	opts.count_already_printed = count;
 	opts.flags = 0;
 	opts.subspec = 0;
-	opts.specifier = 0;
+	opts.spec = 0;
 	return (opts);
 }
 
