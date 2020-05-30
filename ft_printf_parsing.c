@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 14:17:57 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/30 16:48:23 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ static int	f_pars_precisn(va_list ap, const char *format, int *i, t_opts *opts)
 	if (format[*i] == '*')
 	{
 		if ((precision = va_arg(ap, int)) < 0)
+		{
+			precision = 0;
 			opts->flags -= 32;
+		}
 		*i += 1;
 	}
 	else

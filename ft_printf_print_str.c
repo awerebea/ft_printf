@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:15:37 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/29 00:20:34 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/29 20:07:24 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static int		f_assist_str(char *val, t_opts *opts)
 	int		len;
 
 	count = 0;
+	if (!val)
+		val = "(null)";
 	len = (int)ft_strlen(val);
 	if ((opts->flags & 32) && opts->precision < len)
 		len = opts->precision;

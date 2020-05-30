@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/29 00:19:57 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/29 19:13:53 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int				f_putwstr_count(wchar_t *s, int len)
 	int		count;
 
 	count = 0;
-	if (!s)
-		s = L"(null)";
 	while (*s && count < len)
 		count += f_putchar_count(*s++);
 	return (count);
@@ -30,8 +28,6 @@ int				f_putstr_count(char *s, int len)
 	int		count;
 
 	count = 0;
-	if (!s)
-		s = "(null)";
 	while (*s && count < len)
 		count += f_putchar_count(*s++);
 	return (count);

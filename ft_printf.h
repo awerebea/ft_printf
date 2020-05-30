@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/29 00:20:44 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/05/29 18:28:15 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int				f_putstr_count(char *s, int len);
 int				f_putwstr_count(wchar_t *s, int len);
 int				f_print_char(va_list ap, t_opts *opts);
 int				f_print_str(va_list ap, t_opts *opts);
+int				f_print_int(va_list ap, t_opts *opts);
+char			*f_llitoa_base(long long n, int base);
 t_opts			f_init_opts(int count);
 
 #endif
