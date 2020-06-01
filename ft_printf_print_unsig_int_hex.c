@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_unsig_int.c                        :+:      :+:    :+:   */
+/*   ft_printf_print_unsig_int_hex.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 20:16:30 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/01 22:55:43 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,22 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, \
 	return (count);
 }
 
-int				f_print_unsig_int(va_list ap, t_opts *opts)
+static char		*f_strupper(char *s)
+{
+	int				len;
+	char			*dest;
+
+	len = ft_strlen(s);
+	if (!(dest = malloc((sizeof(char) * len + 1))))
+		return (NULL);
+	while (*s)
+		*dest++ = ft_toupper(*s++);
+	*dest = '\0';
+	free(s - len);
+	return (dest - len);
+}
+
+int				f_print_unsig_int_hex(va_list ap, t_opts *opts, char spec)
 {
 	int				count;
 	unsigned int	val;
@@ -72,7 +87,10 @@ int				f_print_unsig_int(va_list ap, t_opts *opts)
 			((opts->flags & 33) == 33))
 		return (-1);
 	val = va_arg(ap, int);
-	s = f_llitoa_base(val, 10);
+	s = (spec == 'u') ? f_llitoa_base(val, 10) : f_llitoa_base(val, 16);
+	s = (spec == 'X') ? f_strupper(s) : s;
+	if (!s)
+		return (-1);
 	len = (int)ft_strlen(s);
 	count = f_print_int_chk_flags(opts, s, val, len);
 	free(s);
