@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 13:32:14 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/01 19:39:41 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 /*
 ** if (spec == 'p')
 **     return (f_print_ptr(ap, opts));
-** if (spec == 'u')
-**     return (f_print_unsig_int(ap, opts));
 ** if (spec == 'x' || spec == 'X')
 **     return (f_print_hex(ap, opts, spec));
 ** if (spec == 'n')
@@ -40,6 +38,8 @@ int				f_print_argument(va_list ap, t_opts *opts, char spec)
 		return (f_print_str(ap, opts));
 	if (spec == 'd' || spec == 'i')
 		return (f_print_int(ap, opts));
+	if (spec == 'u')
+		return (f_print_unsig_int(ap, opts));
 	return (0);
 }
 

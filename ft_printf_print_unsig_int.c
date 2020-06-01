@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_int.c                              :+:      :+:    :+:   */
+/*   ft_printf_print_unsig_int.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 20:09:35 by awerebea         ###   ########.fr       */
+/*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
+/*   Updated: 2020/06/01 20:16:30 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-static int		f_print_assist(t_opts *opts, char *s, int val, int len)
+static int		f_print_assist(t_opts *opts, char *s, unsigned int val, int len)
 {
 	int		count;
 
 	count = 0;
-	if ((opts->flags & 8) && val >= 0)
+	if (opts->flags & 8)
 		count += f_putchar_count('+', 0);
-	if ((opts->flags & 4) && val >= 0)
+	if (opts->flags & 4)
 		count += f_putchar_count(' ', 0);
-	if (val < 0)
-		count += f_putchar_count('-', 0);
 	if (val == 0)
 		opts->prec++;
 	if (opts->flags & 1)
@@ -31,12 +29,12 @@ static int		f_print_assist(t_opts *opts, char *s, int val, int len)
 	while (opts->prec-- > len)
 		count += f_putchar_count('0', 0);
 	if (val != 0 || !(opts->flags & 32))
-		count += (val < 0) ? \
-				f_putstr_count(++s, len, 0) : f_putstr_count(s, len, 0);
+		count += f_putstr_count(s, len, 0);
 	return (count);
 }
 
-static int		f_print_int_chk_flags(t_opts *opts, char *s, int val, int len)
+static int		f_print_int_chk_flags(t_opts *opts, char *s, \
+										unsigned int val, int len)
 {
 	int		count;
 
@@ -51,7 +49,7 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, int val, int len)
 		count += f_print_assist(opts, s, val, len);
 	else
 	{
-		(val < 0 || (opts->flags & 12)) ? opts->width-- : 0;
+		(opts->flags & 12) ? opts->width-- : 0;
 		if ((opts->width - len) > (opts->prec - len))
 		{
 			while (opts->width-- > ((opts->prec > len) ? \
@@ -63,12 +61,12 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, int val, int len)
 	return (count);
 }
 
-int				f_print_int(va_list ap, t_opts *opts)
+int				f_print_unsig_int(va_list ap, t_opts *opts)
 {
-	int		count;
-	int		val;
-	char	*s;
-	int		len;
+	int				count;
+	unsigned int	val;
+	char			*s;
+	int				len;
 
 	if ((opts->flags & 2) || ((opts->flags & 12) == 12) || \
 			((opts->flags & 33) == 33))
@@ -76,8 +74,6 @@ int				f_print_int(va_list ap, t_opts *opts)
 	val = va_arg(ap, int);
 	s = f_llitoa_base(val, 10);
 	len = (int)ft_strlen(s);
-	if (val < 0)
-		len--;
 	count = f_print_int_chk_flags(opts, s, val, len);
 	free(s);
 	return (count);
