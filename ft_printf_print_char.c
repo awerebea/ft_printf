@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:45:09 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/28 22:05:42 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/01 12:10:22 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int				f_print_char(va_list ap, t_opts *opts)
 	{
 		if (opts->flags & 16)
 		{
-			count += f_putchar_count(val);
+			count += f_putchar_count(val, 0);
 			while (count < opts->width)
-				count += f_putchar_count(' ');
+				count += f_putchar_count(' ', 0);
 			return (count);
 		}
 		while (count < opts->width - 1)
-			count += f_putchar_count(' ');
+			count += f_putchar_count(' ', 0);
 	}
-	count += f_putchar_count(val);
+	count += f_putchar_count(val, 0);
 	return (count);
 }

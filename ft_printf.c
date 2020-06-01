@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/30 23:34:39 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/01 13:32:14 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ int				ft_printf(const char *format, ...)
 	count += f_pars_format(ap, format);
 	va_end(ap);
 	return (count);
+}
+
+t_opts			f_init_opts(int count)
+{
+	t_opts	opts;
+
+	opts.width = 0;
+	opts.prec = 0;
+	opts.count_already_printed = count;
+	opts.flags = 0;
+	opts.subspec = 0;
+	opts.spec = 0;
+	return (opts);
 }

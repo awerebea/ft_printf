@@ -6,50 +6,62 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/30 23:40:33 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/01 13:33:54 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int				f_putwstr_count(wchar_t *s, int len)
+int				f_putchar_count(char c, int fd)
 {
-	int		count;
-
-	count = 0;
-	while (*s && count < len)
-		count += f_putchar_count(*s++);
-	return (count);
-}
-
-int				f_putstr_count(char *s, int len)
-{
-	int		count;
-
-	count = 0;
-	while (*s && count < len)
-		count += f_putchar_count(*s++);
-	return (count);
-}
-
-int				f_putchar_count(char c)
-{
-	write(0, &c, 1);
+	write(fd, &c, 1);
 	return (1);
 }
 
-t_opts			f_init_opts(int count)
+int				f_putstr_count(char *s, int len, int fd)
 {
-	t_opts	opts;
+	int		count;
 
-	opts.width = 0;
-	opts.prec = 0;
-	opts.count_already_printed = count;
-	opts.flags = 0;
-	opts.subspec = 0;
-	opts.spec = 0;
-	return (opts);
+	count = 0;
+	while (*s && count < len)
+		count += f_putchar_count(*s++, fd);
+	return (count);
+}
+
+int				f_putwstr_count(wchar_t *s, int len, int fd)
+{
+	int		count;
+
+	count = 0;
+	while (*s && count < len)
+		count += f_putchar_count(*s++, fd);
+	return (count);
+}
+
+wchar_t			*f_wstrdup(const wchar_t *ws)
+{
+	wchar_t	*dest;
+	wchar_t *ws_bckp;
+	size_t	len;
+	size_t	i;
+
+	ws_bckp = (wchar_t*)ws;
+	len = (size_t)ws;
+	while (*ws)
+		ws++;
+	len = ((size_t)ws - len) / 4;
+	ws = ws_bckp;
+	if (!(dest = malloc(sizeof(wchar_t) * (len + 1))))
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = ws[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 int				f_isspec(const char *format, int *i, t_opts *opts)
