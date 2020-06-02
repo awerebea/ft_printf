@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/02 10:45:07 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/02 13:45:30 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 **     return (f_print_short_float(ap, opts));
 ** if (spec == 'e' || spec == 'E')
 **     return (f_print_scientific(ap, opts, spec));
-** if (spec == '%')
-**     return (f_print_percent(ap, opts));
 */
 
 int				f_print_argument(va_list ap, t_opts *opts, char spec)
@@ -36,6 +34,8 @@ int				f_print_argument(va_list ap, t_opts *opts, char spec)
 		return (f_print_int(ap, opts));
 	if (spec == 'p' || spec == 'u' || spec == 'x' || spec == 'X')
 		return (f_print_ptr_uns_hex(ap, opts, spec));
+	if (spec == '%')
+		return (f_putchar_count('%', 0));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 13:33:54 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/02 13:49:43 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 		{
 			*i += 1;
 			opts->subspec = 4;
-			return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
 		}
-		return (ft_strchr("cCspdiuxXnfFgGeE", format[*i])) ? 1 : 0;
+		return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 	}
 	if (format[*i] == 'h')
 	{
@@ -86,9 +85,8 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 		{
 			*i += 1;
 			opts->subspec = 1;
-			return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
 		}
-		return (ft_strchr("diuxXn", format[*i])) ? 1 : 0;
+		return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 	}
 	return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 }
