@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_uns_int_hex.c                      :+:      :+:    :+:   */
+/*   ft_printf_print_ptr.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/02 09:11:54 by awerebea         ###   ########.fr       */
+/*   Created: 2020/06/02 09:14:47 by awerebea          #+#    #+#             */
+/*   Updated: 2020/06/02 09:56:10 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-static int		f_print_assist(t_opts *opts, char *s, unsigned int val, int len)
+static int		f_print_assist(t_opts *opts, char *s, size_t val, int len)
 {
 	int		count;
 
@@ -34,7 +34,7 @@ static int		f_print_assist(t_opts *opts, char *s, unsigned int val, int len)
 }
 
 static int		f_print_int_chk_flags(t_opts *opts, char *s, \
-										unsigned int val, int len)
+										size_t val, int len)
 {
 	int		count;
 
@@ -61,34 +61,18 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, \
 	return (count);
 }
 
-static char		*f_strupper(char *s)
-{
-	int				len;
-	char			*dest;
-
-	len = ft_strlen(s);
-	if (!(dest = malloc((sizeof(char) * len + 1))))
-		return (NULL);
-	while (*s)
-		*dest++ = ft_toupper(*s++);
-	*dest = '\0';
-	free(s - len);
-	return (dest - len);
-}
-
-int				f_print_uns_int_hex(va_list ap, t_opts *opts, char spec)
+int				f_print_ptr(va_list ap, t_opts *opts)
 {
 	int				count;
-	unsigned int	val;
+	size_t			val;
 	char			*s;
 	int				len;
 
 	if ((opts->flags & 2) || ((opts->flags & 12) == 12) || \
 			((opts->flags & 33) == 33))
 		return (-1);
-	val = va_arg(ap, int);
-	s = (spec == 'u') ? f_llitoa_base(val, 10) : f_llitoa_base(val, 16);
-	s = (spec == 'X') ? f_strupper(s) : s;
+	val = va_arg(ap, size_t);
+	s = f_llitoa_base((unsigned long long)val, 16);
 	if (!s)
 		return (-1);
 	len = (int)ft_strlen(s);

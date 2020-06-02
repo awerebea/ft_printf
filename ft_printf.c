@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/02 09:12:06 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/02 10:45:07 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "libft.h"
 
 /*
-** if (spec == 'p')
-**     return (f_print_ptr(ap, opts));
 ** if (spec == 'n')
 **     return (f_print_nothing(ap, opts));
 ** if (spec == 'f' || spec == 'F')
@@ -36,8 +34,8 @@ int				f_print_argument(va_list ap, t_opts *opts, char spec)
 		return (f_print_str(ap, opts));
 	if (spec == 'd' || spec == 'i')
 		return (f_print_int(ap, opts));
-	if (spec == 'u' || spec == 'x' || spec == 'X')
-		return (f_print_uns_int_hex(ap, opts, spec));
+	if (spec == 'p' || spec == 'u' || spec == 'x' || spec == 'X')
+		return (f_print_ptr_uns_hex(ap, opts, spec));
 	return (0);
 }
 

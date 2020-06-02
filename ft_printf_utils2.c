@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 20:10:12 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 20:10:41 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/02 10:00:13 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char			*f_llitoa_base(long long n, int base)
 	m = n;
 	while (m /= base)
 		i++;
-	if (!(symbols = ft_strdup("0123456789ABCDEF")) || \
+	if (!(symbols = ft_strdup("0123456789abcdef")) || \
 			!(str = malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	(n < 0) ? str[0] = '-' : 0;
