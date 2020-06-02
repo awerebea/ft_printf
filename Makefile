@@ -13,7 +13,15 @@
 NAME     = libftprintf.a
 CC       = gcc
 CFLAGS   = -Wall -Wextra -Werror
-SRC      = ft_printf
+SRC      = ft_printf \
+			ft_printf_utils \
+			ft_printf_utils2 \
+			ft_printf_print_str \
+			ft_printf_print_ptr \
+			ft_printf_print_ptr_uns_hex \
+			ft_printf_print_int \
+			ft_printf_print_char \
+			ft_printf_parsing
 OBJDIR   = ./obj
 OBJ      = $(addprefix $(OBJDIR)/, $(SRC:=.o))
 LIBFTDIR = ./libft
