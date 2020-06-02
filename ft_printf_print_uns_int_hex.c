@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_unsig_int_hex.c                    :+:      :+:    :+:   */
+/*   ft_printf_print_uns_int_hex.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 22:55:43 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/02 09:11:54 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char		*f_strupper(char *s)
 	return (dest - len);
 }
 
-int				f_print_unsig_int_hex(va_list ap, t_opts *opts, char spec)
+int				f_print_uns_int_hex(va_list ap, t_opts *opts, char spec)
 {
 	int				count;
 	unsigned int	val;
