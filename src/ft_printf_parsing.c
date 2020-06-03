@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:00:43 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 11:50:47 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 	}
 	else
 	{
-		while (format[*i] >= '0' && format[*i]  <= '9')
+		while (format[*i] >= '0' && format[*i] <= '9')
 		{
 			if ((width * 10) < width)
 				return (-1);
@@ -72,7 +72,7 @@ static int	f_pars_prec(va_list ap, const char *format, int *i, t_opts *opts)
 	}
 	else
 	{
-		while (format[*i] >= '0' && format[*i]  <= '9')
+		while (format[*i] >= '0' && format[*i] <= '9')
 		{
 			if ((prec * 10) < prec)
 				return (-1);
@@ -95,7 +95,7 @@ static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 			return (-1);
 		*i += 1;
 	}
-	if (format[*i] == '*' || (format[*i] >= '0' && format[*i]  <= '9'))
+	if (format[*i] == '*' || (format[*i] >= '0' && format[*i] <= '9'))
 	{
 		if ((opts.width = f_pars_width(ap, format, i, &opts)) < 0)
 			return (-1);
