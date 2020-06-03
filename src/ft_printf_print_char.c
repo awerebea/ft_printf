@@ -6,12 +6,11 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:45:09 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 12:10:22 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 11:00:51 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 
 int				f_print_char(va_list ap, t_opts *opts)
 {

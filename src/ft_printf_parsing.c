@@ -6,12 +6,11 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 12:09:57 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 11:00:43 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
 
 static char	f_pars_flags(char c, char flags)
 {
@@ -45,7 +44,7 @@ static int	f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 	}
 	else
 	{
-		while (ft_isdigit(format[*i]))
+		while (format[*i] >= '0' && format[*i]  <= '9')
 		{
 			if ((width * 10) < width)
 				return (-1);
@@ -73,7 +72,7 @@ static int	f_pars_prec(va_list ap, const char *format, int *i, t_opts *opts)
 	}
 	else
 	{
-		while (ft_isdigit(format[*i]))
+		while (format[*i] >= '0' && format[*i]  <= '9')
 		{
 			if ((prec * 10) < prec)
 				return (-1);
@@ -90,13 +89,13 @@ static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 
 	opts = f_init_opts(count);
 	*i += 1;
-	while (ft_strchr("-+ #0", format[*i]))
+	while (ft_printf_strchr("-+ #0", format[*i]))
 	{
 		if (!(opts.flags = f_pars_flags(format[*i], opts.flags)))
 			return (-1);
 		*i += 1;
 	}
-	if (format[*i] == '*' || ft_isdigit(format[*i]))
+	if (format[*i] == '*' || (format[*i] >= '0' && format[*i]  <= '9'))
 	{
 		if ((opts.width = f_pars_width(ap, format, i, &opts)) < 0)
 			return (-1);

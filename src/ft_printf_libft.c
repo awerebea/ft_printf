@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_printf_libft.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/02 14:36:08 by awerebea          #+#    #+#             */
-/*   Updated: 2020/05/21 15:06:06 by awerebea         ###   ########.fr       */
+/*   Created: 2020/06/03 10:35:45 by awerebea          #+#    #+#             */
+/*   Updated: 2020/06/03 10:39:33 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strdup(const char *s)
+char	*ft_printf_strchr(const char *s, int c)
+{
+	while (*s != c)
+	{
+		if (!*s)
+			return (NULL);
+		s++;
+	}
+	return ((char *)s);
+}
+
+char	*ft_printf_strdup(const char *s)
 {
 	char	*dest;
 	size_t	len;
@@ -29,4 +40,21 @@ char	*ft_strdup(const char *s)
 	*dest = '\0';
 	dest -= len;
 	return (dest);
+}
+
+size_t	ft_printf_strlen(const char *s)
+{
+	size_t	start;
+
+	start = (size_t)s;
+	while (*s)
+		s++;
+	return ((size_t)s - start);
+}
+
+int	ft_printf_toupper(int c)
+{
+	if (c >= 97 && c <= 122)
+		return (c - 32);
+	return (c);
 }

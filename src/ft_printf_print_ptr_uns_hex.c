@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_uns_int_hex.c                      :+:      :+:    :+:   */
+/*   ft_printf_print_ptr_uns_hex.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/02 10:37:31 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 11:01:19 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
-#include "libft.h"
 
 static int		f_print_assist(t_opts *opts, char *s, size_t val, int len)
 {
@@ -65,11 +65,11 @@ static char		*f_strupper(char *s)
 	int				len;
 	char			*dest;
 
-	len = ft_strlen(s);
+	len = ft_printf_strlen(s);
 	if (!(dest = malloc((sizeof(char) * len + 1))))
 		return (NULL);
 	while (*s)
-		*dest++ = ft_toupper(*s++);
+		*dest++ = ft_printf_toupper(*s++);
 	*dest = '\0';
 	free(s - len);
 	return (dest - len);
@@ -92,13 +92,13 @@ int				f_print_ptr_uns_hex(va_list ap, t_opts *opts, char spec)
 	if (spec == 'p' && !val)
 	{
 		free(s);
-		s = ft_strdup("0x0");
+		s = ft_printf_strdup("0x0");
 	}
 	if (!s)
 		return (-1);
 	if (spec == 'p' && val)
 		count += f_putstr_count("0x", 2, 0);
-	len = (int)ft_strlen(s);
+	len = (int)ft_printf_strlen(s);
 	count += f_chk_flags(opts, s, val, len);
 	free(s);
 	return (count);

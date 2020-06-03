@@ -6,18 +6,18 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:15:37 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/01 13:36:47 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 11:01:27 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
-#include "libft.h"
 
 static int		f_chk_wstr(wchar_t *ws)
 {
 	while (*ws)
 	{
-		if (!(ft_isascii(*ws)))
+		if (*ws > 127)
 			return (0);
 		ws++;
 	}
@@ -67,7 +67,7 @@ static int		f_print_assist_str(char *str, char *val, t_opts *opts)
 	int		len;
 
 	count = 0;
-	len = (int)ft_strlen(str);
+	len = (int)ft_printf_strlen(str);
 	len = ((opts->flags & 32) && len > opts->prec && val) ? opts->prec : len;
 	if (opts->width > len)
 	{
@@ -106,7 +106,7 @@ int				f_print_str(va_list ap, t_opts *opts)
 	}
 	else
 	{
-		str = (!val) ? ft_strdup("(null)") : val;
+		str = (!val) ? ft_printf_strdup("(null)") : val;
 		return (!(str)) ? -1 : f_print_assist_str(str, val, opts);
 	}
 }

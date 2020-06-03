@@ -6,12 +6,13 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/02 13:49:43 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 11:01:58 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <unistd.h>
 #include "ft_printf.h"
-#include "libft.h"
 
 int				f_putchar_count(char c, int fd)
 {
@@ -75,7 +76,7 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 			*i += 1;
 			opts->subspec = 4;
 		}
-		return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
+		return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 	}
 	if (format[*i] == 'h')
 	{
@@ -86,7 +87,7 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 			*i += 1;
 			opts->subspec = 1;
 		}
-		return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
+		return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 	}
-	return (ft_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
+	return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 }
