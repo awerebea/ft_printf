@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:01:19 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 12:20:49 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static int		f_print_assist(t_opts *opts, char *s, size_t val, int len)
 
 	count = 0;
 	if (opts->flags & 8)
-		count += f_putchar_count('+', 0);
+		count += f_putchar_count('+', 1);
 	if (opts->flags & 4)
-		count += f_putchar_count(' ', 0);
+		count += f_putchar_count(' ', 1);
 	if (val == 0)
 		opts->prec++;
 	if (opts->flags & 1)
 		opts->prec = opts->width;
 	while (opts->prec-- > len)
-		count += f_putchar_count('0', 0);
+		count += f_putchar_count('0', 1);
 	if (val != 0 || !(opts->flags & 32))
-		count += f_putstr_count(s, len, 0);
+		count += f_putstr_count(s, len, 1);
 	return (count);
 }
 
@@ -42,7 +42,7 @@ static int		f_chk_flags(t_opts *opts, char *s, size_t val, int len)
 	{
 		count += f_print_assist(opts, s, val, len);
 		while (count < opts->width)
-			count += f_putchar_count(' ', 0);
+			count += f_putchar_count(' ', 1);
 	}
 	else if (opts->flags & 1)
 		count += f_print_assist(opts, s, val, len);
@@ -53,7 +53,7 @@ static int		f_chk_flags(t_opts *opts, char *s, size_t val, int len)
 		{
 			while (opts->width-- > ((opts->prec > len) ? \
 						opts->prec : len))
-				count += f_putchar_count(' ', 0);
+				count += f_putchar_count(' ', 1);
 		}
 		count += f_print_assist(opts, s, val, len);
 	}
@@ -97,7 +97,7 @@ int				f_print_ptr_uns_hex(va_list ap, t_opts *opts, char spec)
 	if (!s)
 		return (-1);
 	if (spec == 'p' && val)
-		count += f_putstr_count("0x", 2, 0);
+		count += f_putstr_count("0x", 2, 1);
 	len = (int)ft_printf_strlen(s);
 	count += f_chk_flags(opts, s, val, len);
 	free(s);

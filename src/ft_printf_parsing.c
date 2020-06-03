@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:50:47 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 12:17:46 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int			f_pars_format(va_list ap, const char *format)
 	while (format[i])
 	{
 		if (format[i] != '%')
-			count += f_putchar_count(format[i], 0);
+			count += f_putchar_count(format[i], 1);
 		else if (format[i] == '%' && format[i + 1])
 		{
 			if ((tmp = f_pars_opts(ap, format, &i, count)) < 0)

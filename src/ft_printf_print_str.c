@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:15:37 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:01:27 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 12:23:32 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ static int		f_print_assist_wstr(wchar_t *str, wchar_t *val, t_opts *opts)
 	{
 		if (opts->flags & 16)
 		{
-			count += f_putwstr_count(str, len, 0);
+			count += f_putwstr_count(str, len, 1);
 			while (count < opts->width)
-				count += f_putchar_count(' ', 0);
+				count += f_putchar_count(' ', 1);
 			return (count);
 		}
 		while (count < opts->width - len)
-			count += f_putchar_count(' ', 0);
+			count += f_putchar_count(' ', 1);
 	}
 	if (opts->prec >= len || !(opts->flags & 32))
-		count += f_putwstr_count(str, len, 0);
+		count += f_putwstr_count(str, len, 1);
 	if (!val)
 		free(str);
 	return (count);
@@ -73,16 +73,16 @@ static int		f_print_assist_str(char *str, char *val, t_opts *opts)
 	{
 		if (opts->flags & 16)
 		{
-			count += f_putstr_count(str, len, 0);
+			count += f_putstr_count(str, len, 1);
 			while (count < opts->width)
-				count += f_putchar_count(' ', 0);
+				count += f_putchar_count(' ', 1);
 			return (count);
 		}
 		while (count < opts->width - len)
-			count += f_putchar_count(' ', 0);
+			count += f_putchar_count(' ', 1);
 	}
 	if (opts->prec >= len || !(opts->flags & 32))
-		count += f_putstr_count(str, len, 0);
+		count += f_putstr_count(str, len, 1);
 	(!val) ? free(str) : 0;
 	return (count);
 }

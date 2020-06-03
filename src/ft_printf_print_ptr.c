@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/02 09:14:47 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:01:12 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/03 12:19:40 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static int		f_print_assist(t_opts *opts, char *s, size_t val, int len)
 
 	count = 0;
 	if (opts->flags & 8)
-		count += f_putchar_count('+', 0);
+		count += f_putchar_count('+', 1);
 	if (opts->flags & 4)
-		count += f_putchar_count(' ', 0);
+		count += f_putchar_count(' ', 1);
 	if (val == 0)
 		opts->prec++;
 	if (opts->flags & 1)
 		opts->prec = opts->width;
 	while (opts->prec-- > len)
-		count += f_putchar_count('0', 0);
+		count += f_putchar_count('0', 1);
 	if (val != 0 || !(opts->flags & 32))
-		count += f_putstr_count(s, len, 0);
+		count += f_putstr_count(s, len, 1);
 	return (count);
 }
 
@@ -43,7 +43,7 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, \
 	{
 		count += f_print_assist(opts, s, val, len);
 		while (count < opts->width)
-			count += f_putchar_count(' ', 0);
+			count += f_putchar_count(' ', 1);
 	}
 	else if (opts->flags & 1)
 		count += f_print_assist(opts, s, val, len);
@@ -54,7 +54,7 @@ static int		f_print_int_chk_flags(t_opts *opts, char *s, \
 		{
 			while (opts->width-- > ((opts->prec > len) ? \
 						opts->prec : len))
-				count += f_putchar_count(' ', 0);
+				count += f_putchar_count(' ', 1);
 		}
 		count += f_print_assist(opts, s, val, len);
 	}
