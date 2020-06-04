@@ -6,13 +6,15 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/03 11:06:54 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/03 13:34:01 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME     = libftprintf.a
 CC       = gcc
 CFLAGS   = -Wall -Wextra -Werror
+OFLAGS   = -O2
+DBGFLAGS = -g
 INCLUDES = -I includes/
 SRCDIR   = src/
 OBJDIR   = obj/
@@ -31,6 +33,8 @@ SRC      = ft_printf \
 OBJ      = $(addprefix $(OBJDIR), $(SRC:=.o))
 DFLS     = $(SRC:=.d)
 
+override FLAGS ?= $(CFLAGS)
+
 all:			$(OBJDIR) $(NAME)
 
 $(NAME):		$(OBJ)
@@ -38,10 +42,13 @@ $(NAME):		$(OBJ)
 	ranlib		$(NAME)
 
 $(OBJ):			$(OBJDIR)%.o: $(SRCDIR)%.c
-	$(CC)		$(CFLAGS) $(INCLUDES) -c $< -o $@ -MD
+	$(CC)		$(FLAGS) $(INCLUDES) -c $< -o $@ -MD
 
 $(OBJDIR):
 	mkdir -p	$(OBJDIR)
+
+debug:
+	make FLAGS="$(CFLAGS) $(DBGFLAGS)" re
 
 include $(wildcard $(addprefix $(OBJDIR), $(DFLS)))
 

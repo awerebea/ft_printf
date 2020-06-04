@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 12:17:46 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 00:04:07 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	f_pars_flags(char c, char flags)
 		flags += 2;
 	else if (c == '0' && !(1 & flags))
 		flags += 1;
-	return (((flags & 17) != 17) && ((flags & 12) != 12)) ? flags : 0;
+	return (flags);
 }
 
 static int	f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
@@ -52,7 +52,7 @@ static int	f_pars_width(va_list ap, const char *format, int *i, t_opts *opts)
 			*i += 1;
 		}
 	}
-	return (f_isspec(format, i, opts) || format[*i] == '.') ? width : -1;
+	return (width);
 }
 
 static int	f_pars_prec(va_list ap, const char *format, int *i, t_opts *opts)
@@ -79,8 +79,9 @@ static int	f_pars_prec(va_list ap, const char *format, int *i, t_opts *opts)
 			prec = prec * 10 + format[*i] - '0';
 			*i += 1;
 		}
+		opts->flags += 64;
 	}
-	return (f_isspec(format, i, opts)) ? prec : -1;
+	return (prec);
 }
 
 static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
@@ -106,7 +107,7 @@ static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 		if ((opts.prec = f_pars_prec(ap, format, i, &opts)) < 0)
 			return (-1);
 	}
-	if (f_isspec(format, i, &opts))
+	if ((opts.spec = f_isspec(format, i, &opts)))
 		return (f_print_argument(ap, &opts, format[*i]));
 	return (-1);
 }

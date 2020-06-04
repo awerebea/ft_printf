@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:01:58 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 00:26:44 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ wchar_t			*f_wstrdup(const wchar_t *ws)
 
 int				f_isspec(const char *format, int *i, t_opts *opts)
 {
+	if (!format[*i])
+		return (0);
 	if (format[*i] == 'l')
 	{
 		*i += 1;
@@ -74,20 +76,18 @@ int				f_isspec(const char *format, int *i, t_opts *opts)
 		if (format[*i] == 'l')
 		{
 			*i += 1;
-			opts->subspec = 4;
+			opts->subspec += 4;
 		}
-		return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 	}
-	if (format[*i] == 'h')
+	else if (format[*i] == 'h')
 	{
 		*i += 1;
 		opts->subspec = 2;
 		if (format[*i] == 'h')
 		{
 			*i += 1;
-			opts->subspec = 1;
+			opts->subspec += 1;
 		}
-		return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 	}
 	return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
 }

@@ -6,60 +6,87 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 12:19:12 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/04 23:54:44 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
 
-static int		f_print_assist(t_opts *opts, char *s, int val, int len)
+static int		f_print_sign(t_opts *opts, int val)
 {
-	int		count;
-
-	count = 0;
-	if ((opts->flags & 8) && val >= 0)
-		count += f_putchar_count('+', 1);
-	if ((opts->flags & 4) && val >= 0)
-		count += f_putchar_count(' ', 1);
-	if (val < 0)
-		count += f_putchar_count('-', 1);
-	if (val == 0)
-		opts->prec++;
-	if (opts->flags & 1)
-		opts->prec = opts->width;
-	while (opts->prec-- > len)
-		count += f_putchar_count('0', 1);
-	if (val != 0 || !(opts->flags & 32))
-		count += (val < 0) ? \
-				f_putstr_count(++s, len, 1) : f_putstr_count(s, len, 1);
-	return (count);
+	if ((opts->flags & 12) && val >= 0)
+		return (opts->flags & 8) ? \
+		f_putchar_count('+', 1) : f_putchar_count(' ', 1);
+	return (val < 0) ? f_putchar_count('-', 1) : 0;
 }
 
-static int		f_chk_flags(t_opts *opts, char *s, int val, int len)
+static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 {
 	int		count;
 
 	count = 0;
 	if (opts->flags & 16)
 	{
-		count += f_print_assist(opts, s, val, len);
+		count += f_print_sign(opts, val);
+		while (opts->prec > len)
+		{
+			count += f_putchar_count('0', 1);
+			opts->prec--;
+		}
+		count += ((opts->flags & 32) && !opts->prec && !val) ? \
+				0 : f_putstr_count(s, len, 1);
 		while (count < opts->width)
 			count += f_putchar_count(' ', 1);
 	}
-	else if (opts->flags & 1)
-		count += f_print_assist(opts, s, val, len);
-	else
+	else if ((opts->flags & 1) && !(opts->flags & 32))
 	{
-		(val < 0 || (opts->flags & 12)) ? opts->width-- : 0;
-		if ((opts->width - len) > (opts->prec - len))
-		{
-			while (opts->width-- > ((opts->prec > len) ? \
-						opts->prec : len))
-				count += f_putchar_count(' ', 1);
-		}
-		count += f_print_assist(opts, s, val, len);
+		count += f_print_sign(opts, val);
+		while (count < opts->width - len)
+			count += f_putchar_count('0', 1);
+		count += ((opts->flags & 32) && !opts->prec && !val) ? \
+				0 : f_putstr_count(s, len, 1);
 	}
+	return (count);
+}
+
+static int		f_val_zero(t_opts *opts, int val, int len)
+{
+	int		count;
+	int		spaces;
+
+	count = 0;
+	if (opts->flags & 12)
+		opts->width--;
+	if (opts->prec)
+		spaces = opts->width - opts->prec;
+	else if (!(opts->flags & 32))
+		spaces = opts->width - len;
+	else
+		spaces = opts->width;
+	while (count < spaces)
+		count += f_putchar_count(' ', 1);
+	count += f_print_sign(opts, val);
+	while (opts->prec-- >= len)
+		count += f_putchar_count('0', 1);
+	count += (!(opts->flags & 32)) ? f_putchar_count('0', 1) : 0;
+	return (count);
+}
+
+static int		f_other_cases(t_opts *opts, char *s, int val, int len)
+{
+	int		count;
+
+	count = 0;
+	opts->prec = (len > opts->prec) ? len : opts->prec;
+	if (opts->flags & 12 || val < 0)
+		opts->width--;
+	while (count < opts->width - opts->prec)
+		count += f_putchar_count(' ', 1);
+	count += f_print_sign(opts, val);
+	while (opts->prec-- > len)
+		count += f_putchar_count('0', 1);
+	count += f_putstr_count(s, len, 1);
 	return (count);
 }
 
@@ -70,15 +97,20 @@ int				f_print_int(va_list ap, t_opts *opts)
 	char	*s;
 	int		len;
 
-	if ((opts->flags & 2) || ((opts->flags & 12) == 12) || \
-			((opts->flags & 33) == 33))
-		return (-1);
 	val = va_arg(ap, int);
 	s = f_llitoa_base(val, 10);
 	len = (int)ft_printf_strlen(s);
 	if (val < 0)
+	{
 		len--;
-	count = f_chk_flags(opts, s, val, len);
-	free(s);
+		s++;
+	}
+	if (opts->flags & 16 || ((opts->flags & 1) && !(opts->flags & 32)))
+		count = f_flag_minus_or_zero(opts, s, val, len);
+	else if (!val)
+		count = f_val_zero(opts, val, len);
+	else
+		count = f_other_cases(opts, s, val, len);
+	(val < 0) ? free(--s) : free(s);
 	return (count);
 }
