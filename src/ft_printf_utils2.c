@@ -6,20 +6,20 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 20:10:12 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 13:45:42 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 18:10:47 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
 
-char			*f_llitoa_base(long long n, int base)
+char			*f_llitoa_base(ssize_t n, int base)
 {
-	char				*str;
-	char				*symbols;
-	int					i;
-	long long			m;
-	unsigned long long	num;
+	char		*str;
+	char		*symbols;
+	int			i;
+	ssize_t		m;
+	size_t		num;
 
 	if ((base < 2 || base > 16) || (base != 10 && n < 0))
 		return (NULL);
@@ -33,7 +33,7 @@ char			*f_llitoa_base(long long n, int base)
 			!(str = malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	(n < 0) ? str[0] = '-' : 0;
-	num = (n < 0) ? ((unsigned long long)n * -1) : (unsigned long long)n;
+	num = (n < 0) ? ((size_t)n * -1) : (size_t)n;
 	str[i--] = '\0';
 	str[i--] = symbols[num % base];
 	while (num /= base)

@@ -6,14 +6,14 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 12:02:26 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 18:09:51 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
 
-static int		f_print_sign(t_opts *opts, int val)
+static int		f_print_sign(t_opts *opts, ssize_t val)
 {
 	if ((opts->flags & 12) && val >= 0)
 		return (opts->flags & 8) ? \
@@ -21,7 +21,7 @@ static int		f_print_sign(t_opts *opts, int val)
 	return (val < 0) ? f_putchar_count('-', 1) : 0;
 }
 
-static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
+static int		f_flag_minus_or_zero(t_opts *opts, char *s, ssize_t val, int len)
 {
 	int		count;
 
@@ -50,7 +50,7 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 	return (count);
 }
 
-static int		f_val_zero(t_opts *opts, int val, int len)
+static int		f_val_zero(t_opts *opts, ssize_t val, int len)
 {
 	int		count;
 	int		spaces;
@@ -73,7 +73,7 @@ static int		f_val_zero(t_opts *opts, int val, int len)
 	return (count);
 }
 
-static int		f_other_cases(t_opts *opts, char *s, int val, int len)
+static int		f_other_cases(t_opts *opts, char *s, ssize_t val, int len)
 {
 	int		count;
 
@@ -93,11 +93,17 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 int				f_print_int(va_list ap, t_opts *opts)
 {
 	int		count;
-	int		val;
+	ssize_t	val;
 	char	*s;
 	int		len;
 
-	val = va_arg(ap, int);
+	if (opts->subspec & 12)
+		val = (opts->subspec & 4) ? va_arg(ap, long long) : va_arg (ap, long);
+	if (opts->subspec & 3)
+		val = (opts->subspec & 1) ? \
+			(short int)va_arg(ap, int) : (signed char)va_arg (ap, int);
+	else
+		val = va_arg(ap, int);
 	s = f_llitoa_base(val, 10);
 	len = (int)ft_printf_strlen(s);
 	if (val < 0)
