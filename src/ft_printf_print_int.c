@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/04 23:54:44 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 12:02:26 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int				f_print_int(va_list ap, t_opts *opts)
 	if (opts->flags & 16 || ((opts->flags & 1) && !(opts->flags & 32)))
 		count = f_flag_minus_or_zero(opts, s, val, len);
 	else if (!val)
-		count = f_val_zero(opts, val, len);
+		count = f_val_zero(opts, 0, len);
 	else
 		count = f_other_cases(opts, s, val, len);
 	(val < 0) ? free(--s) : free(s);

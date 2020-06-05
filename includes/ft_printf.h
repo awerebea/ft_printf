@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 11:08:12 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 12:35:30 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ typedef struct	s_opts
 }				t_opts;
 
 int				ft_printf(const char *format, ...);
+char			*ft_printf_strjoin(char const *s1, char const *s2);
 char			*ft_printf_strchr(const char *s, int c);
 char			*ft_printf_strdup(const char *s);
 int				ft_printf_toupper(int c);
 size_t			ft_printf_strlen(const char *s);
 char			*f_llitoa_base(long long n, int base);
+char			*f_ullitoa_base(unsigned long long n, int base);
 int				f_isspec(const char *format, int *i, t_opts *opts);
 int				f_pars_format(va_list ap, const char *format);
 int				f_print_argument(va_list ap, t_opts *opts, char spec);
