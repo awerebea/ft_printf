@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/05 23:21:58 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/05 23:37:36 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ DFLS     = $(SRC:=.d)
 
 override FLAGS ?= $(CFLAGS)
 
+include $(wildcard $(addprefix $(OBJDIR), $(DFLS)))
+
 all:			$(OBJDIR) $(NAME)
 
 $(NAME):		$(OBJ)
@@ -49,7 +51,7 @@ $(OBJDIR):
 debug:
 	make FLAGS="$(CFLAGS) $(DBGFLAGS)" re
 
-include $(wildcard $(addprefix $(OBJDIR), $(DFLS)))
+bonus: all
 
 clean:
 	rm -rf		$(OBJDIR)
@@ -59,4 +61,4 @@ fclean:			clean
 
 re:				fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug bonus
