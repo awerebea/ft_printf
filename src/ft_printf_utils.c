@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 00:26:44 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 20:06:40 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,30 @@ wchar_t			*f_wstrdup(const wchar_t *ws)
 	return (dest);
 }
 
-int				f_isspec(const char *format, int *i, t_opts *opts)
+char			f_isspec(const char *format, int *i, t_opts *opts)
 {
-	if (!format[*i])
+	char	spc;
+	int		j;
+
+	j = *i;
+	if (!format[j])
 		return (0);
-	if (format[*i] == 'l')
+	if (format[j] == 'l')
 	{
-		*i += 1;
+		j++;
 		opts->subspec = 8;
-		if (format[*i] == 'l')
-		{
-			*i += 1;
+		if (format[j++] == 'l')
 			opts->subspec += 4;
-		}
+		j -= (opts->subspec & 4) ? 0 : 1;
 	}
-	else if (format[*i] == 'h')
+	else if (format[j] == 'h')
 	{
-		*i += 1;
+		j++;
 		opts->subspec = 2;
-		if (format[*i] == 'h')
-		{
-			*i += 1;
+		if (format[j++] == 'h')
 			opts->subspec += 1;
-		}
+		j -= (opts->subspec & 1) ? 0 : 1;
 	}
-	return (ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? 1 : 0;
+	*i = j;
+	return (spc = *ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? spc : 0;
 }

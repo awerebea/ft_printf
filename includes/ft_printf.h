@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 18:09:16 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 19:25:38 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ char			*f_strupper(char *s);
 size_t			ft_printf_strlen(const char *s);
 char			*f_llitoa_base(ssize_t n, int base);
 char			*f_ullitoa_base(unsigned long long n, int base);
-int				f_isspec(const char *format, int *i, t_opts *opts);
+char			f_isspec(const char *format, int *i, t_opts *opts);
 int				f_pars_format(va_list ap, const char *format);
-int				f_print_argument(va_list ap, t_opts *opts, char spec);
+int				f_print_argument(va_list ap, t_opts *opts);
 int				f_print_char(va_list ap, t_opts *opts);
 int				f_print_str(va_list ap, t_opts *opts);
 int				f_print_ptr(va_list ap, t_opts *opts);
 int				f_print_int(va_list ap, t_opts *opts);
-int				f_print_uns_hex(va_list ap, t_opts *opts, char spec);
+int				f_print_uns_hex(va_list ap, t_opts *opts);
 int				f_putchar_count(char c, int fd);
 int				f_putstr_count(char *s, int len, int fd);
 int				f_putwstr_count(wchar_t *s, int len, int fd);

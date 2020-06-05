@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 00:04:07 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 19:25:52 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 			return (-1);
 	}
 	if ((opts.spec = f_isspec(format, i, &opts)))
-		return (f_print_argument(ap, &opts, format[*i]));
+		return (f_print_argument(ap, &opts));
 	return (-1);
 }
 

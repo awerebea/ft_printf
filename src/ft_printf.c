@@ -6,36 +6,36 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 12:57:36 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 19:21:19 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
-** if (spec == 'n')
+** if (opts->spec == 'n')
 **     return (f_print_nothing(ap, opts));
-** if (spec == 'f' || spec == 'F')
+** if (opts->spec == 'f' || opts->spec == 'F')
 **     return (f_print_float(ap, opts));
-** if (spec == 'g' || spec == 'G')
+** if (opts->spec == 'g' || opts->spec == 'G')
 **     return (f_print_short_float(ap, opts));
-** if (spec == 'e' || spec == 'E')
-**     return (f_print_scientific(ap, opts, spec));
+** if (opts->spec == 'e' || opts->spec == 'E')
+**     return (f_print_scientific(ap, opts, opts->spec));
 */
 
-int				f_print_argument(va_list ap, t_opts *opts, char spec)
+int				f_print_argument(va_list ap, t_opts *opts)
 {
-	if (spec == 'c' || spec == 'C')
+	if (opts->spec == 'c' || opts->spec == 'C')
 		return (f_print_char(ap, opts));
-	if (spec == 's')
+	if (opts->spec == 's')
 		return (f_print_str(ap, opts));
-	if (spec == 'p')
+	if (opts->spec == 'p')
 		return (f_print_ptr(ap, opts));
-	if (spec == 'd' || spec == 'i')
+	if (opts->spec == 'd' || opts->spec == 'i')
 		return (f_print_int(ap, opts));
-	if (spec == 'u' || spec == 'x' || spec == 'X')
-		return (f_print_uns_hex(ap, opts, spec));
-	if (spec == '%')
+	if (opts->spec == 'u' || opts->spec == 'x' || opts->spec == 'X')
+		return (f_print_uns_hex(ap, opts));
+	if (opts->spec == '%')
 		return (f_putchar_count('%', 1));
 	return (0);
 }
