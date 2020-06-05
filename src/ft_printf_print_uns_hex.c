@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 18:10:20 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 19:04:11 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 	return (count);
 }
 
-int				f_print_uns_hex(va_list ap, t_opts *opts, char spec)
+int				f_print_uns_hex(va_list ap, t_opts *opts)
 {
 	int				count;
 	size_t			val;
@@ -99,8 +99,8 @@ int				f_print_uns_hex(va_list ap, t_opts *opts, char spec)
 
 	count = 0;
 	val = va_arg(ap, size_t);
-	s = (spec == 'u') ? f_ullitoa_base(val, 10) : f_ullitoa_base(val, 16);
-	s = (spec == 'X') ? f_strupper(s) : s;
+	s = (opts->spec == 'u') ? f_ullitoa_base(val, 10) : f_ullitoa_base(val, 16);
+	s = (opts->spec == 'X') ? f_strupper(s) : s;
 	if (!s)
 		return (-1);
 	len = (int)ft_printf_strlen(s);
