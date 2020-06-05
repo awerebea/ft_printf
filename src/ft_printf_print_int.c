@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 18:09:51 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 18:27:12 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int				f_print_int(va_list ap, t_opts *opts)
 
 	if (opts->subspec & 12)
 		val = (opts->subspec & 4) ? va_arg(ap, long long) : va_arg (ap, long);
-	if (opts->subspec & 3)
+	else if (opts->subspec & 3)
 		val = (opts->subspec & 1) ? \
-			(short int)va_arg(ap, int) : (signed char)va_arg (ap, int);
+			(signed char)va_arg(ap, int) : (short int)va_arg (ap, int);
 	else
 		val = va_arg(ap, int);
 	s = f_llitoa_base(val, 10);
