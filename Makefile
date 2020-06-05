@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/05 11:44:48 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/05 12:43:20 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC      = ft_printf \
 			ft_printf_parsing \
 			ft_printf_print_char \
 			ft_printf_print_int \
-			ft_printf_print_ptr_uns_hex \
+			ft_printf_print_ptr \
+			ft_printf_print_uns_hex \
 			ft_printf_print_str \
 			ft_printf_utils \
 			ft_printf_utils2

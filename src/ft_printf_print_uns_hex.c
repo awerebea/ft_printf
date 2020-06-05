@@ -1,32 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_ptr_uns_hex.c                      :+:      :+:    :+:   */
+/*   ft_printf_print_uns_hex.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 12:40:16 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 13:36:37 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
-
-static char		*f_strupper(char *s)
-{
-	int				len;
-	char			*dest;
-
-	len = ft_printf_strlen(s);
-	if (!(dest = malloc((sizeof(char) * len + 1))))
-		return (NULL);
-	while (*s)
-		*dest++ = ft_printf_toupper(*s++);
-	*dest = '\0';
-	free(s - len);
-	return (dest - len);
-}
 
 static int		f_print_sign(t_opts *opts)
 {
@@ -105,36 +90,23 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 	return (count);
 }
 
-int				f_print_ptr_uns_hex(va_list ap, t_opts *opts, char spec)
+int				f_print_uns_hex(va_list ap, t_opts *opts, char spec)
 {
 	int				count;
 	size_t			val;
 	char			*s;
-	char			*tmp;
 	int				len;
 
 	count = 0;
-	tmp = NULL;
 	val = va_arg(ap, size_t);
 	s = (spec == 'u') ? f_ullitoa_base(val, 10) : f_ullitoa_base(val, 16);
 	s = (spec == 'X') ? f_strupper(s) : s;
-	if (spec == 'p' && !val)
-	{
-		free(s);
-		return (f_putstr_count("(nil)", 5, 1));
-	}
 	if (!s)
 		return (-1);
-	if (spec == 'p' && val)
-	{
-		tmp = s;
-		s = ft_printf_strjoin("0x", s);
-		free(tmp);
-	}
 	len = (int)ft_printf_strlen(s);
 	if (opts->flags & 16 || ((opts->flags & 1) && !(opts->flags & 32)))
 		count = f_flag_minus_or_zero(opts, s, val, len);
-	else if (!val && spec != 'p')
+	else if (!val)
 		count = f_val_zero(opts, len);
 	else
 		count = f_other_cases(opts, s, val, len);

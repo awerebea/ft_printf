@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 20:10:12 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 12:23:08 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 13:45:42 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,19 @@ char			*f_ullitoa_base(unsigned long long n, int base)
 		str[i--] = symbols[num % base];
 	free(symbols);
 	return (str);
+}
+
+char			*f_strupper(char *s)
+{
+	int				len;
+	char			*dest;
+
+	len = ft_printf_strlen(s);
+	if (!(dest = malloc((sizeof(char) * len + 1))))
+		return (NULL);
+	while (*s)
+		*dest++ = ft_printf_toupper(*s++);
+	*dest = '\0';
+	free(s - len);
+	return (dest - len);
 }
