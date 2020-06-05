@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 19:21:19 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 20:17:44 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 **     return (f_print_short_float(ap, opts));
 ** if (opts->spec == 'e' || opts->spec == 'E')
 **     return (f_print_scientific(ap, opts, opts->spec));
+**	if (opts->spec == 'p')
+**		return (f_print_ptr(ap, opts));
+**	if (opts->spec == 'u' || opts->spec == 'x' || opts->spec == 'X')
+**		return (f_print_uns_hex(ap, opts));
 */
 
 int				f_print_argument(va_list ap, t_opts *opts)
@@ -29,12 +33,11 @@ int				f_print_argument(va_list ap, t_opts *opts)
 		return (f_print_char(ap, opts));
 	if (opts->spec == 's')
 		return (f_print_str(ap, opts));
-	if (opts->spec == 'p')
-		return (f_print_ptr(ap, opts));
 	if (opts->spec == 'd' || opts->spec == 'i')
 		return (f_print_int(ap, opts));
-	if (opts->spec == 'u' || opts->spec == 'x' || opts->spec == 'X')
-		return (f_print_uns_hex(ap, opts));
+	if (opts->spec == 'p' || opts->spec == 'u' || \
+			opts->spec == 'x' || opts->spec == 'X')
+		return (f_print_ptr_uns_hex(ap, opts));
 	if (opts->spec == '%')
 		return (f_putchar_count('%', 1));
 	return (0);
