@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_uns_hex.c                          :+:      :+:    :+:   */
+/*   ft_printf_print_ptr_uns_hex.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 19:04:11 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 23:15:26 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,16 @@
 
 static int		f_print_sign(t_opts *opts)
 {
-	if (opts->flags & 12)
-		return (opts->flags & 8) ? \
-		f_putchar_count('+', 1) : f_putchar_count(' ', 1);
+	if (opts->spec == 'p' || \
+			((opts->spec == 'x' || opts->spec == 'X') && (opts->flags & 2)))
+		return (f_putstr_count("0x", 2, 1));
+	if (opts->spec == 'd' || opts->spec == 'i' || \
+			opts->spec == 'u' || opts->spec == 'x' || opts->spec == 'X')
+	{
+		if (opts->flags & 12)
+			return (opts->flags & 8) ? \
+			f_putchar_count('+', 1) : f_putchar_count(' ', 1);
+	}
 	return (0);
 }
 
@@ -56,8 +63,11 @@ static int		f_val_zero(t_opts *opts, int len)
 	int		spaces;
 
 	count = 0;
-	if (opts->flags & 12)
+	if (opts->spec != 'p' && (opts->flags & 12))
 		opts->width--;
+	if (opts->spec == 'p' || \
+			((opts->spec == 'x' || opts->spec == 'X') && (opts->flags & 2)))
+		opts->width -= 2;
 	if (opts->prec)
 		spaces = opts->width - opts->prec;
 	else if (!(opts->flags & 32))
@@ -79,8 +89,11 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 
 	count = 0;
 	opts->prec = (len > opts->prec) ? len : opts->prec;
-	if (opts->flags & 12 || val < 0)
+	if (opts->spec != 'p' && (opts->flags & 12 || val < 0))
 		opts->width--;
+	if (opts->spec == 'p' || \
+			((opts->spec == 'x' || opts->spec == 'X') && (opts->flags & 2)))
+		opts->width -= 2;
 	while (count < opts->width - opts->prec)
 		count += f_putchar_count(' ', 1);
 	count += f_print_sign(opts);
@@ -90,7 +103,7 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 	return (count);
 }
 
-int				f_print_uns_hex(va_list ap, t_opts *opts)
+int				f_print_ptr_uns_hex(va_list ap, t_opts *opts)
 {
 	int				count;
 	size_t			val;

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 18:27:12 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/05 23:20:58 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int		f_print_sign(t_opts *opts, ssize_t val)
 	return (val < 0) ? f_putchar_count('-', 1) : 0;
 }
 
-static int		f_flag_minus_or_zero(t_opts *opts, char *s, ssize_t val, int len)
+static int		f_flag_minus_zero(t_opts *opts, char *s, ssize_t val, int len)
 {
 	int		count;
 
@@ -98,21 +98,18 @@ int				f_print_int(va_list ap, t_opts *opts)
 	int		len;
 
 	if (opts->subspec & 12)
-		val = (opts->subspec & 4) ? va_arg(ap, long long) : va_arg (ap, long);
+		val = (opts->subspec & 4) ? va_arg(ap, long long) : va_arg(ap, long);
 	else if (opts->subspec & 3)
 		val = (opts->subspec & 1) ? \
-			(signed char)va_arg(ap, int) : (short int)va_arg (ap, int);
+			(signed char)va_arg(ap, int) : (short int)va_arg(ap, int);
 	else
 		val = va_arg(ap, int);
 	s = f_llitoa_base(val, 10);
 	len = (int)ft_printf_strlen(s);
-	if (val < 0)
-	{
-		len--;
-		s++;
-	}
+	len -= (val < 0) ? 1 : 0;
+	s += (val < 0) ? 1 : 0;
 	if (opts->flags & 16 || ((opts->flags & 1) && !(opts->flags & 32)))
-		count = f_flag_minus_or_zero(opts, s, val, len);
+		count = f_flag_minus_zero(opts, s, val, len);
 	else if (!val)
 		count = f_val_zero(opts, 0, len);
 	else

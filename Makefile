@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/05 20:15:49 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/05 23:21:58 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,6 @@ SRC      = ft_printf \
 			ft_printf_print_str \
 			ft_printf_utils \
 			ft_printf_utils2
-
-			# ft_printf_print_ptr \
-			# ft_printf_print_uns_hex \
 
 OBJ      = $(addprefix $(OBJDIR), $(SRC:=.o))
 DFLS     = $(SRC:=.d)
