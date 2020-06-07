@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/07 11:20:29 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/08 01:00:05 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts);
 int				f_putchar_count(char c, int fd);
 int				f_putstr_count(char *s, int len, int fd);
 int				f_putwstr_count(wchar_t *s, int len, int fd);
+int				f_save_count_printed(va_list ap, t_opts *opts);
 t_opts			f_init_opts(int count);
 wchar_t			*f_wstrdup(const wchar_t *ws);
 

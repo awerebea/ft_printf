@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 20:10:12 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 18:10:47 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/08 01:00:55 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,13 @@ char			*f_strupper(char *s)
 	*dest = '\0';
 	free(s - len);
 	return (dest - len);
+}
+
+int				f_save_count_printed(va_list ap, t_opts *opts)
+{
+	int				*count_printed;
+
+	count_printed = va_arg(ap, int*);
+	*count_printed = opts->count_already_printed;
+	return (0);
 }

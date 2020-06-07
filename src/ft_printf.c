@@ -38,6 +38,8 @@ int				f_print_argument(va_list ap, t_opts *opts)
 	if (opts->spec == 'p' || opts->spec == 'u' || opts->spec == 'o' || \
 			opts->spec == 'x' || opts->spec == 'X')
 		return (f_print_ptr_uns_hex_oct(ap, opts));
+	if (opts->spec == 'n')
+		return (f_save_count_printed(ap, opts));
 	if (opts->spec == '%')
 		return (f_putchar_count('%', 1));
 	return (0);
