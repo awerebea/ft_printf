@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 20:06:40 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/06 10:07:14 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ wchar_t			*f_wstrdup(const wchar_t *ws)
 
 char			f_isspec(const char *format, int *i, t_opts *opts)
 {
-	char	spc;
+	char	sp;
 	int		j;
 
 	j = *i;
@@ -90,5 +90,5 @@ char			f_isspec(const char *format, int *i, t_opts *opts)
 		j -= (opts->subspec & 1) ? 0 : 1;
 	}
 	*i = j;
-	return (spc = *ft_printf_strchr("cCspdiuxXnfFgGeE%", format[*i])) ? spc : 0;
+	return (sp = *ft_printf_strchr("cCspdiuoxXnfFgGeE%", format[*i])) ? sp : 0;
 }

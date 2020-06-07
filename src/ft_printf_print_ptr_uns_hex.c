@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 23:15:26 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/07 10:46:00 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 
 static int		f_print_sign(t_opts *opts)
 {
-	if (opts->spec == 'p' || \
-			((opts->spec == 'x' || opts->spec == 'X') && (opts->flags & 2)))
+	if (opts->spec == 'p' || ((opts->spec == 'x') && (opts->flags & 2)))
 		return (f_putstr_count("0x", 2, 1));
-	if (opts->spec == 'd' || opts->spec == 'i' || \
-			opts->spec == 'u' || opts->spec == 'x' || opts->spec == 'X')
+	if ((opts->spec == 'X') && (opts->flags & 2))
+		return (f_putstr_count("0X", 2, 1));
+	if (opts->spec == 'o' && (opts->flags & 2))
 	{
-		if (opts->flags & 12)
-			return (opts->flags & 8) ? \
-			f_putchar_count('+', 1) : f_putchar_count(' ', 1);
+		opts->prec -= (opts->prec) ? 1 : 0;
+		return (f_putchar_count('0', 1));
 	}
 	return (0);
 }
@@ -41,7 +40,8 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 			count += f_putchar_count('0', 1);
 			opts->prec--;
 		}
-		count += ((opts->flags & 32) && !opts->prec && !val) ? \
+		count += (!val && ((((opts->flags & 32) && !opts->prec)) || \
+		((opts->spec == 'o' && ((opts->flags & 3) == 2) && !opts->prec)))) ? \
 				0 : f_putstr_count(s, len, 1);
 		while (count < opts->width)
 			count += f_putchar_count(' ', 1);
@@ -51,8 +51,9 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 		count += f_print_sign(opts);
 		while (count < opts->width - len)
 			count += f_putchar_count('0', 1);
-		count += ((opts->flags & 32) && !opts->prec && !val) ? \
-				0 : f_putstr_count(s, len, 1);
+		count += (!val && ((((opts->flags & 32) && !opts->prec)) || \
+				((opts->spec == 'o' && ((opts->flags & 3) == 2))))) ? \
+					0 : f_putstr_count(s, len, 1);
 	}
 	return (count);
 }
@@ -74,12 +75,15 @@ static int		f_val_zero(t_opts *opts, int len)
 		spaces = opts->width - len;
 	else
 		spaces = opts->width;
+	spaces -= (opts->spec == 'o' && ((opts->flags & 34) == 34) && \
+			!opts->prec) ? 1 : 0;
 	while (count < spaces)
 		count += f_putchar_count(' ', 1);
 	count += f_print_sign(opts);
 	while (opts->prec-- >= len)
 		count += f_putchar_count('0', 1);
-	count += (!(opts->flags & 32)) ? f_putchar_count('0', 1) : 0;
+	count += (!(opts->flags & 32) && (!(opts->spec == 'o' && \
+					(opts->flags & 34)))) ? f_putchar_count('0', 1) : 0;
 	return (count);
 }
 
@@ -89,7 +93,8 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 
 	count = 0;
 	opts->prec = (len > opts->prec) ? len : opts->prec;
-	if (opts->spec != 'p' && (opts->flags & 12 || val < 0))
+	if ((opts->spec != 'p' && (opts->flags & 12 || val < 0)) || \
+			(opts->spec == 'o' && (opts->flags & 2) && opts->prec == len))
 		opts->width--;
 	if (opts->spec == 'p' || \
 			((opts->spec == 'x' || opts->spec == 'X') && (opts->flags & 2)))
@@ -112,7 +117,12 @@ int				f_print_ptr_uns_hex(va_list ap, t_opts *opts)
 
 	count = 0;
 	val = va_arg(ap, size_t);
-	s = (opts->spec == 'u') ? f_ullitoa_base(val, 10) : f_ullitoa_base(val, 16);
+	if (opts->spec == 'u')
+		s = f_ullitoa_base(val, 10);
+	else if (opts->spec == 'o')
+		s = f_ullitoa_base(val, 8);
+	else if (opts->spec == 'p' || opts->spec == 'x' || opts->spec == 'X')
+		s = f_ullitoa_base(val, 16);
 	s = (opts->spec == 'X') ? f_strupper(s) : s;
 	if (!s)
 		return (-1);
