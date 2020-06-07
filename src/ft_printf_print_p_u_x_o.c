@@ -6,14 +6,14 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/07 11:20:08 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/08 00:10:23 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
 
-static int		f_print_sign(t_opts *opts, size_t val)
+static int		f_print_prefix(t_opts *opts, size_t val)
 {
 	if (opts->spec == 'p' || ((opts->spec == 'x') && (opts->flags & 2) && val))
 		return (f_putstr_count("0x", 2, 1));
@@ -34,12 +34,9 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 	count = 0;
 	if (opts->flags & 16)
 	{
-		count += f_print_sign(opts, val);
+		count += f_print_prefix(opts, val);
 		while (opts->prec > len)
-		{
-			count += f_putchar_count('0', 1);
-			opts->prec--;
-		}
+			opts->prec -= (count += f_putchar_count('0', 1)) ? 1 : 0;
 		count += (!val && ((((opts->flags & 32) && !opts->prec)) || \
 		((opts->spec == 'o' && ((opts->flags & 3) == 2) && !opts->prec)))) ? \
 				0 : f_putstr_count(s, len, 1);
@@ -48,7 +45,7 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 	}
 	else if ((opts->flags & 1) && !(opts->flags & 32))
 	{
-		count += f_print_sign(opts, val);
+		count += f_print_prefix(opts, val);
 		while (count < opts->width - len)
 			count += f_putchar_count('0', 1);
 		count += (!val && ((((opts->flags & 32) && !opts->prec)) || \
@@ -78,7 +75,7 @@ static int		f_val_zero(t_opts *opts, int len)
 			!opts->prec) ? 1 : 0;
 	while (count < spaces)
 		count += f_putchar_count(' ', 1);
-	count += f_print_sign(opts, 0);
+	count += f_print_prefix(opts, 0);
 	while (opts->prec-- >= len)
 		count += f_putchar_count('0', 1);
 	count += (!(opts->flags & 32) && (!(opts->spec == 'o' && \
@@ -100,7 +97,7 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 		opts->width -= 2;
 	while (count < opts->width - opts->prec)
 		count += f_putchar_count(' ', 1);
-	count += f_print_sign(opts, val);
+	count += f_print_prefix(opts, val);
 	while (opts->prec-- > len)
 		count += f_putchar_count('0', 1);
 	count += f_putstr_count(s, len, 1);

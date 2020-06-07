@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 19:25:52 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/07 23:27:38 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,8 @@ static int	f_pars_opts(va_list ap, const char *format, int *i, int count)
 		if ((opts.prec = f_pars_prec(ap, format, i, &opts)) < 0)
 			return (-1);
 	}
-	if ((opts.spec = f_isspec(format, i, &opts)))
-		return (f_print_argument(ap, &opts));
-	return (-1);
+	opts.spec = f_isspec(format, i, &opts);
+	return (opts.spec != 0) ? (f_print_argument(ap, &opts)) : (-1);
 }
 
 int			f_pars_format(va_list ap, const char *format)
