@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_ptr_uns_hex.c                      :+:      :+:    :+:   */
+/*   ft_printf_print_p_u_x_o.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/07 11:08:46 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/07 11:20:08 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 	return (count);
 }
 
-int				f_print_ptr_uns_hex(va_list ap, t_opts *opts)
+int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts)
 {
 	int				count;
 	size_t			val;

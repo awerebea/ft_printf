@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/06 10:00:27 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/07 11:19:46 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				f_print_argument(va_list ap, t_opts *opts)
 		return (f_print_int(ap, opts));
 	if (opts->spec == 'p' || opts->spec == 'u' || opts->spec == 'o' || \
 			opts->spec == 'x' || opts->spec == 'X')
-		return (f_print_ptr_uns_hex(ap, opts));
+		return (f_print_ptr_uns_hex_oct(ap, opts));
 	if (opts->spec == '%')
 		return (f_putchar_count('%', 1));
 	return (0);

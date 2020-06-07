@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/05 23:37:36 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/07 11:14:26 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,10 @@ OBJDIR   = obj/
 SRC      = ft_printf \
 			ft_printf_libft \
 			ft_printf_parsing \
-			ft_printf_print_char \
-			ft_printf_print_int \
-			ft_printf_print_ptr_uns_hex \
-			ft_printf_print_str \
+			ft_printf_print_c \
+			ft_printf_print_d_i \
+			ft_printf_print_p_u_x_o \
+			ft_printf_print_s \
 			ft_printf_utils \
 			ft_printf_utils2
 
