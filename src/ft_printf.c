@@ -6,16 +6,11 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 14:53:29 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/15 00:01:51 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*
-** if (opts->spec == 'g' || opts->spec == 'G')
-**     return (f_print_short_float(ap, opts));
-*/
 
 int				f_print_argument(va_list ap, t_opts *opts)
 {
