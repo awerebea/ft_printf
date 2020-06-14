@@ -6,25 +6,17 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/07 11:19:46 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/13 16:45:11 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
-** if (opts->spec == 'n')
-**     return (f_print_nothing(ap, opts));
-** if (opts->spec == 'f' || opts->spec == 'F')
-**     return (f_print_float(ap, opts));
 ** if (opts->spec == 'g' || opts->spec == 'G')
 **     return (f_print_short_float(ap, opts));
 ** if (opts->spec == 'e' || opts->spec == 'E')
-**     return (f_print_scientific(ap, opts, opts->spec));
-**	if (opts->spec == 'p')
-**		return (f_print_ptr(ap, opts));
-**	if (opts->spec == 'u' || opts->spec == 'x' || opts->spec == 'X')
-**		return (f_print_uns_hex(ap, opts));
+**     return (f_print_scientific(ap, opts));
 */
 
 int				f_print_argument(va_list ap, t_opts *opts)
@@ -38,6 +30,8 @@ int				f_print_argument(va_list ap, t_opts *opts)
 	if (opts->spec == 'p' || opts->spec == 'u' || opts->spec == 'o' || \
 			opts->spec == 'x' || opts->spec == 'X')
 		return (f_print_ptr_uns_hex_oct(ap, opts));
+	if (opts->spec == 'f' || opts->spec == 'F')
+		return (f_print_float(ap, opts));
 	if (opts->spec == 'n')
 		return (f_save_count_printed(ap, opts));
 	if (opts->spec == '%')

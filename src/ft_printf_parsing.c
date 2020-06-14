@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:02:15 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/07 23:27:38 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 11:17:18 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	f_pars_prec(va_list ap, const char *format, int *i, t_opts *opts)
 			prec = prec * 10 + format[*i] - '0';
 			*i += 1;
 		}
-		opts->flags += 64;
 	}
 	return (prec);
 }

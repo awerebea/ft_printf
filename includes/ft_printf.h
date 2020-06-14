@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/08 01:00:05 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 11:15:50 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int				ft_printf(const char *format, ...);
 char			*ft_printf_strchr(const char *s, int c);
 char			*ft_printf_strdup(const char *s);
 int				ft_printf_toupper(int c);
-char			*f_strupper(char *s);
 size_t			ft_printf_strlen(const char *s);
+char			*f_strupper(char *s);
 char			*f_llitoa_base(ssize_t n, int base);
 char			*f_ullitoa_base(unsigned long long n, int base);
 char			f_isspec(const char *format, int *i, t_opts *opts);
@@ -42,6 +42,7 @@ int				f_print_char(va_list ap, t_opts *opts);
 int				f_print_str(va_list ap, t_opts *opts);
 int				f_print_int(va_list ap, t_opts *opts);
 int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts);
+int				f_print_float(va_list ap, t_opts *opts);
 int				f_putchar_count(char c, int fd);
 int				f_putstr_count(char *s, int len, int fd);
 int				f_putwstr_count(wchar_t *s, int len, int fd);
