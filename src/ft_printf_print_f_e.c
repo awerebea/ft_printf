@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 15:13:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 16:11:55 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 17:06:29 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
 	spaces -= (opts->spec == 'e' || opts->spec == 'E') ? 4 : 0;
 	if (opts->flags & 16)
 	{
-		count += f_putstr_count(s, len, 1);
+		count += f_putstr_count(s, 1);
 		count += f_print_sign_fract(val, opts, 'f');
 		while (spaces-- > 0)
 			count += f_putchar_count(' ', 1);
@@ -93,7 +93,7 @@ static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
 	{
 		while (spaces-- > 0)
 			count += f_putchar_count('0', 1);
-		count += f_putstr_count(s, len, 1);
+		count += f_putstr_count(s, 1);
 		count += f_print_sign_fract(val, opts, 'f');
 	}
 	return (count);
@@ -114,7 +114,7 @@ static int			f_other_cases(t_opts *opts, char *s, long double val, \
 	while (spaces-- > 0)
 		count += f_putchar_count(' ', 1);
 	count += f_print_sign_fract(val, opts, 's');
-	count += f_putstr_count(s, len, 1);
+	count += f_putstr_count(s, 1);
 	count += f_print_sign_fract(val, opts, 'f');
 	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/03 10:35:45 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 23:16:22 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 17:26:27 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,28 @@ char			*ft_printf_strdup(const char *s)
 	*dest = '\0';
 	dest -= len;
 	return (dest);
+}
+
+size_t			ft_printf_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	count;
+	size_t	i;
+
+	if (!src || !dst)
+		return (0);
+	count = (size_t)src;
+	while (*src)
+		src++;
+	count = (size_t)src - count;
+	src -= count;
+	i = count;
+	if (size)
+	{
+		while (size-- > 1 && i--)
+			*dst++ = *src++;
+		*dst = '\0';
+	}
+	return (count);
 }
 
 size_t			ft_printf_strlen(const char *s)

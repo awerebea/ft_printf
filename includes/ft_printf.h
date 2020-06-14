@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 15:11:42 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 23:43:34 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_opts
 int				ft_printf(const char *format, ...);
 char			*ft_printf_strchr(const char *s, int c);
 char			*ft_printf_strdup(const char *s);
+size_t			ft_printf_strlcpy(char *dst, const char *src, size_t size);
 int				ft_printf_toupper(int c);
 size_t			ft_printf_strlen(const char *s);
 char			*f_strupper(char *s);
@@ -46,10 +47,8 @@ int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts);
 int				f_print_float_scientific(va_list ap, t_opts *opts);
 int				f_print_e_pow(t_opts *opts);
 int				f_putchar_count(char c, int fd);
-int				f_putstr_count(char *s, int len, int fd);
-int				f_putwstr_count(wchar_t *s, int len, int fd);
+int				f_putstr_count(char *s, int fd);
 int				f_save_count_printed(va_list ap, t_opts *opts);
 t_opts			f_init_opts(int count);
-wchar_t			*f_wstrdup(const wchar_t *ws);
 
 #endif

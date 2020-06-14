@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 20:10:12 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 17:00:17 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 17:06:01 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int				f_print_e_pow(t_opts *opts)
 		s++;
 		len--;
 	}
-	count += f_putstr_count(s, len, 1);
+	count += f_putstr_count(s, 1);
 	(opts->e_pow < 0) ? free(--s) : free(s);
 	return (count);
 }

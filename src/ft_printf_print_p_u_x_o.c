@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/08 00:10:23 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 17:08:36 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static int		f_print_prefix(t_opts *opts, size_t val)
 {
 	if (opts->spec == 'p' || ((opts->spec == 'x') && (opts->flags & 2) && val))
-		return (f_putstr_count("0x", 2, 1));
+		return (f_putstr_count("0x", 1));
 	if ((opts->spec == 'X') && (opts->flags & 2) && val)
-		return (f_putstr_count("0X", 2, 1));
+		return (f_putstr_count("0X", 1));
 	if (opts->spec == 'o' && (opts->flags & 2))
 	{
 		opts->prec -= (opts->prec) ? 1 : 0;
@@ -39,7 +39,7 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 			opts->prec -= (count += f_putchar_count('0', 1)) ? 1 : 0;
 		count += (!val && ((((opts->flags & 32) && !opts->prec)) || \
 		((opts->spec == 'o' && ((opts->flags & 3) == 2) && !opts->prec)))) ? \
-				0 : f_putstr_count(s, len, 1);
+				0 : f_putstr_count(s, 1);
 		while (count < opts->width)
 			count += f_putchar_count(' ', 1);
 	}
@@ -50,7 +50,7 @@ static int		f_flag_minus_or_zero(t_opts *opts, char *s, int val, int len)
 			count += f_putchar_count('0', 1);
 		count += (!val && ((((opts->flags & 32) && !opts->prec)) || \
 				((opts->spec == 'o' && ((opts->flags & 3) == 2))))) ? \
-					0 : f_putstr_count(s, len, 1);
+					0 : f_putstr_count(s, 1);
 	}
 	return (count);
 }
@@ -100,7 +100,7 @@ static int		f_other_cases(t_opts *opts, char *s, int val, int len)
 	count += f_print_prefix(opts, val);
 	while (opts->prec-- > len)
 		count += f_putchar_count('0', 1);
-	count += f_putstr_count(s, len, 1);
+	count += f_putstr_count(s, 1);
 	return (count);
 }
 

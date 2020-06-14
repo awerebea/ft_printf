@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/05 23:20:58 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 17:05:48 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int		f_flag_minus_zero(t_opts *opts, char *s, ssize_t val, int len)
 			opts->prec--;
 		}
 		count += ((opts->flags & 32) && !opts->prec && !val) ? \
-				0 : f_putstr_count(s, len, 1);
+				0 : f_putstr_count(s, 1);
 		while (count < opts->width)
 			count += f_putchar_count(' ', 1);
 	}
@@ -45,7 +45,7 @@ static int		f_flag_minus_zero(t_opts *opts, char *s, ssize_t val, int len)
 		while (count < opts->width - len)
 			count += f_putchar_count('0', 1);
 		count += ((opts->flags & 32) && !opts->prec && !val) ? \
-				0 : f_putstr_count(s, len, 1);
+				0 : f_putstr_count(s, 1);
 	}
 	return (count);
 }
@@ -86,7 +86,7 @@ static int		f_other_cases(t_opts *opts, char *s, ssize_t val, int len)
 	count += f_print_sign(opts, val);
 	while (opts->prec-- > len)
 		count += f_putchar_count('0', 1);
-	count += f_putstr_count(s, len, 1);
+	count += f_putstr_count(s, 1);
 	return (count);
 }
 

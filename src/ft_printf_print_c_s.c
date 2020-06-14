@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_char.c                             :+:      :+:    :+:   */
+/*   ft_printf_print_c.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:45:09 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/03 12:18:08 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 23:45:36 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "ft_printf.h"
 
 int				f_print_char(va_list ap, t_opts *opts)
@@ -36,5 +37,48 @@ int				f_print_char(va_list ap, t_opts *opts)
 			count += f_putchar_count(' ', 1);
 	}
 	count += f_putchar_count(val, 1);
+	return (count);
+}
+
+static int		f_print_assist_str(char *str, t_opts *opts)
+{
+	int		count;
+	int		len;
+	int		spaces;
+	char	*tmp;
+
+	count = 0;
+	len = (int)ft_printf_strlen(str);
+	tmp = str;
+	if ((opts->flags & 32) && len > opts->prec)
+	{
+		if (!(tmp = malloc(sizeof(char) * opts->prec + 1)))
+			return (-1);
+		ft_printf_strlcpy(tmp, str, opts->prec + 1);
+	}
+	spaces = (len > opts->prec && (opts->flags & 32)) ? \
+			opts->width - opts->prec : opts->width - len;
+	count += (opts->flags & 16) ? f_putstr_count(tmp, 1) : 0;
+	while (spaces-- > 0)
+		count += f_putchar_count(' ', 1);
+	count += (!(opts->flags & 16)) ? f_putstr_count(tmp, 1) : 0;
+	if ((opts->flags & 32) && len > opts->prec)
+		free(tmp);
+	return (count);
+}
+
+int				f_print_str(va_list ap, t_opts *opts)
+{
+	int		count;
+	char	*val;
+	char	*str;
+
+	str = NULL;
+	val = va_arg(ap, char*);
+	str = (!val) ? ft_printf_strdup("(null)") : val;
+	if (!str)
+		return (-1);
+	count = f_print_assist_str(str, opts);
+	!val ? free(str) : 0;
 	return (count);
 }
