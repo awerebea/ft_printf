@@ -6,18 +6,33 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 15:13:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 11:12:51 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 16:11:55 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
 
-static long double	round_float(long double val, t_opts *opts)
+static long double	round_float_and_conv_to_sci(long double val, t_opts *opts)
 {
 	int			i;
 	long double	tmp;
 
+	if (opts->spec == 'e' || opts->spec == 'E')
+	{
+		tmp = (val < 0) ? -val : val;
+		while (tmp >= 10)
+		{
+			tmp /= 10;
+			opts->e_pow++;
+		}
+		while (val && tmp < 1)
+		{
+			tmp *= 10;
+			opts->e_pow--;
+		}
+		val = (val < 0) ? -tmp : tmp;
+	}
 	i = 0;
 	tmp = 0.5;
 	opts->prec = (!(opts->flags & 32)) ? 6 : opts->prec;
@@ -37,8 +52,7 @@ static int			f_print_sign_fract(long double val, t_opts *opts, char c)
 			count += f_putchar_count('.', 1);
 		if (opts->prec)
 		{
-			val = (val < 0) ? -val : val;
-			val -= (ssize_t)val;
+			val = (val < 0) ? -(val - (ssize_t)val) : val - (ssize_t)val;
 			while (count <= opts->prec)
 			{
 				val *= 10;
@@ -46,6 +60,8 @@ static int			f_print_sign_fract(long double val, t_opts *opts, char c)
 				val -= (int)val;
 			}
 		}
+		count += (opts->spec == 'e' || opts->spec == 'E') ? \
+				f_print_e_pow(opts) : 0;
 		return (count);
 	}
 	if ((opts->flags & 12) && val >= 0)
@@ -65,6 +81,7 @@ static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
 	spaces = (opts->prec) ? opts->width - count - len - opts->prec - 1 : \
 			opts->width - len - count;
 	spaces -= ((opts->flags & 2) && (opts->prec == 0)) ? 1 : 0;
+	spaces -= (opts->spec == 'e' || opts->spec == 'E') ? 4 : 0;
 	if (opts->flags & 16)
 	{
 		count += f_putstr_count(s, len, 1);
@@ -93,6 +110,7 @@ static int			f_other_cases(t_opts *opts, char *s, long double val, \
 			opts->width - len;
 	spaces -= ((opts->flags & 12) || val < 0) ? 1 : 0;
 	spaces -= ((opts->flags & 2) && (opts->prec == 0)) ? 1 : 0;
+	spaces -= (opts->spec == 'e' || opts->spec == 'E') ? 4 : 0;
 	while (spaces-- > 0)
 		count += f_putchar_count(' ', 1);
 	count += f_print_sign_fract(val, opts, 's');
@@ -101,7 +119,7 @@ static int			f_other_cases(t_opts *opts, char *s, long double val, \
 	return (count);
 }
 
-int					f_print_float(va_list ap, t_opts *opts)
+int					f_print_float_scientific(va_list ap, t_opts *opts)
 {
 	int			count;
 	int			len_int_part;
@@ -110,7 +128,7 @@ int					f_print_float(va_list ap, t_opts *opts)
 
 	count = 0;
 	val = (opts->subspec & 4) ? va_arg(ap, long double) : va_arg(ap, double);
-	val = round_float(val, opts);
+	val = round_float_and_conv_to_sci(val, opts);
 	s = (val < 0 && !(ssize_t)val) ? \
 		ft_printf_strdup("-0") : f_llitoa_base((ssize_t)val, 10);
 	if (!s)

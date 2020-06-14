@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 11:15:50 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 15:11:42 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_opts
 	int		width;
 	int		prec;
 	int		count_already_printed;
+	int		e_pow;
 	char	flags;
 	char	subspec;
 	char	spec;
@@ -42,7 +43,8 @@ int				f_print_char(va_list ap, t_opts *opts);
 int				f_print_str(va_list ap, t_opts *opts);
 int				f_print_int(va_list ap, t_opts *opts);
 int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts);
-int				f_print_float(va_list ap, t_opts *opts);
+int				f_print_float_scientific(va_list ap, t_opts *opts);
+int				f_print_e_pow(t_opts *opts);
 int				f_putchar_count(char c, int fd);
 int				f_putstr_count(char *s, int len, int fd);
 int				f_putwstr_count(wchar_t *s, int len, int fd);

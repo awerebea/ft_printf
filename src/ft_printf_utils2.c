@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 20:10:12 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/08 01:00:55 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 17:00:17 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,32 @@ int				f_save_count_printed(va_list ap, t_opts *opts)
 	count_printed = va_arg(ap, int*);
 	*count_printed = opts->count_already_printed;
 	return (0);
+}
+
+int				f_print_e_pow(t_opts *opts)
+{
+	int				count;
+	int				len;
+	char			*s;
+
+	count = 0;
+	if (opts->spec == 'e')
+		count += f_putchar_count('e', 1);
+	else if (opts->spec == 'E')
+		count += f_putchar_count('E', 1);
+	count += (opts->e_pow < 0) ? \
+			f_putchar_count('-', 1) : f_putchar_count('+', 1);
+	if (opts->e_pow > -10 && opts->e_pow < 10)
+		count += f_putchar_count('0', 1);
+	if (!(s = f_llitoa_base(opts->e_pow, 10)))
+		return (-1);
+	len = ft_printf_strlen(s);
+	if (opts->e_pow < 0)
+	{
+		s++;
+		len--;
+	}
+	count += f_putstr_count(s, len, 1);
+	(opts->e_pow < 0) ? free(--s) : free(s);
+	return (count);
 }

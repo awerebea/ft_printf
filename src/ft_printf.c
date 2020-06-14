@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/13 16:45:11 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/14 14:53:29 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 /*
 ** if (opts->spec == 'g' || opts->spec == 'G')
 **     return (f_print_short_float(ap, opts));
-** if (opts->spec == 'e' || opts->spec == 'E')
-**     return (f_print_scientific(ap, opts));
 */
 
 int				f_print_argument(va_list ap, t_opts *opts)
@@ -30,8 +28,9 @@ int				f_print_argument(va_list ap, t_opts *opts)
 	if (opts->spec == 'p' || opts->spec == 'u' || opts->spec == 'o' || \
 			opts->spec == 'x' || opts->spec == 'X')
 		return (f_print_ptr_uns_hex_oct(ap, opts));
-	if (opts->spec == 'f' || opts->spec == 'F')
-		return (f_print_float(ap, opts));
+	if (opts->spec == 'f' || opts->spec == 'F' || \
+			opts->spec == 'e' || opts->spec == 'E')
+		return (f_print_float_scientific(ap, opts));
 	if (opts->spec == 'n')
 		return (f_save_count_printed(ap, opts));
 	if (opts->spec == '%')
@@ -60,6 +59,7 @@ t_opts			f_init_opts(int count)
 	opts.width = 0;
 	opts.prec = 0;
 	opts.count_already_printed = count;
+	opts.e_pow = 0;
 	opts.flags = 0;
 	opts.subspec = 0;
 	opts.spec = 0;
