@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_c.c                                :+:      :+:    :+:   */
+/*   ft_printf_print_c_s.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:45:09 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 23:45:36 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/15 15:33:34 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int				f_print_char(va_list ap, t_opts *opts)
 	char	val;
 
 	count = 0;
-	if ((opts->flags & 47) || (opts->subspec & 7))
-		return (-1);
 	val = va_arg(ap, int);
 	if ((opts->subspec & 8) && val < 0)
 		return (-1);
