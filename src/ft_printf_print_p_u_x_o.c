@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 19:43:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 17:08:36 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/16 00:48:01 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts)
 	int				len;
 
 	count = 0;
-	val = va_arg(ap, size_t);
+	val = f_check_u_o_x_subspec(ap, opts);
 	if (opts->spec == 'u')
 		s = f_ullitoa_base(val, 10);
 	else if (opts->spec == 'o')

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 23:25:23 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/16 00:49:20 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,24 @@ int				f_putstr_count(char *s, int fd)
 	while (*s)
 		count += f_putchar_count(*s++, fd);
 	return (count);
+}
+
+size_t			f_check_u_o_x_subspec(va_list ap, t_opts *opts)
+{
+	size_t	val;
+
+	if (opts->spec == 'p')
+		return (va_arg(ap, size_t));
+	if (opts->subspec & 12)
+		val = (opts->subspec & 4) ? \
+			va_arg(ap, unsigned long long) : va_arg(ap, unsigned long);
+	else if (opts->subspec & 3 && opts->subspec != 'p')
+		val = (opts->subspec & 1) ? \
+			(unsigned char)va_arg(ap, unsigned int) : \
+			(unsigned short int)va_arg(ap, unsigned int);
+	else
+		val = va_arg(ap, unsigned int);
+	return (val);
 }
 
 char			f_isspec(const char *format, int *i, t_opts *opts)
