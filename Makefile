@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/14 23:53:31 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/15 12:26:16 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ CFLAGS   = -Wall -Wextra -Werror
 OFLAGS   = -O2
 DBGFLAGS = -g
 INCLDIR  = includes/
-HEADER   = $(addprefix $(INCLDIR), ft_printf.h)
 SRCDIR   = src/
 OBJDIR   = obj/
 
@@ -41,8 +40,8 @@ $(NAME):		$(OBJ)
 	ar rc		$(NAME) $?
 	ranlib		$(NAME)
 
-$(OBJ):			$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)
-	$(CC)		$(FLAGS) -I $(INCLDIR) -c $< -o $@
+$(OBJ):			$(OBJDIR)%.o: $(SRCDIR)%.c
+	$(CC)		$(FLAGS) -I $(INCLDIR) -c $< -o $@ -MD
 
 $(OBJDIR):
 	mkdir -p	$(OBJDIR)
@@ -59,5 +58,7 @@ fclean:			clean
 	rm -f		$(NAME)
 
 re:				fclean all
+
+include $(wildcard $(addprefix $(OBJDIR), $(DFLS)))
 
 .PHONY: all clean fclean re debug bonus
