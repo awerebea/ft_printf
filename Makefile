@@ -6,7 +6,7 @@
 #    By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 14:51:15 by awerebea          #+#    #+#              #
-#    Updated: 2020/06/15 12:26:16 by awerebea         ###   ########.fr        #
+#    Updated: 2020/06/15 22:12:36 by awerebea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC      = ft_printf \
 			ft_printf_print_d_i \
 			ft_printf_print_f_e \
 			ft_printf_print_p_u_x_o \
+			ft_printf_print_percent \
 			ft_printf_utils \
 			ft_printf_utils2
 

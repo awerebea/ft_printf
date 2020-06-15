@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 14:42:35 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/15 00:01:51 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/15 22:13:03 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				f_print_argument(va_list ap, t_opts *opts)
 	if (opts->spec == 'n')
 		return (f_save_count_printed(ap, opts));
 	if (opts->spec == '%')
-		return (f_putchar_count('%', 1));
+		return (f_print_percent(opts));
 	return (0);
 }
 

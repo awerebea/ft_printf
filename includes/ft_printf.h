@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 23:43:34 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/15 22:13:38 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int				f_print_str(va_list ap, t_opts *opts);
 int				f_print_int(va_list ap, t_opts *opts);
 int				f_print_ptr_uns_hex_oct(va_list ap, t_opts *opts);
 int				f_print_float_scientific(va_list ap, t_opts *opts);
+int				f_print_percent(t_opts *opts);
 int				f_print_e_pow(t_opts *opts);
 int				f_putchar_count(char c, int fd);
 int				f_putstr_count(char *s, int fd);
