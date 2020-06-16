@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_print_f.c                                :+:      :+:    :+:   */
+/*   ft_printf_print_f_e.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 15:13:02 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 17:06:29 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:31:51 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,26 @@ static long double	round_float_and_conv_to_sci(long double val, t_opts *opts)
 	return (val < 0) ? (val - tmp) : (val + tmp);
 }
 
-static int			f_print_sign_fract(long double val, t_opts *opts, char c)
+static int			f_print_fract(t_opts *opts, long double val)
 {
 	int			count;
 
 	count = 0;
-	if (c == 'f')
+	if (opts->prec || (opts->flags & 2))
+		count += f_putchar_count('.', 1);
+	if (opts->prec)
 	{
-		if (opts->prec || (opts->flags & 2))
-			count += f_putchar_count('.', 1);
-		if (opts->prec)
+		val = (val < 0) ? -(val - (ssize_t)val) : val - (ssize_t)val;
+		while (count <= opts->prec)
 		{
-			val = (val < 0) ? -(val - (ssize_t)val) : val - (ssize_t)val;
-			while (count <= opts->prec)
-			{
-				val *= 10;
-				count += f_putchar_count((int)val + '0', 1);
-				val -= (int)val;
-			}
+			val *= 10;
+			count += f_putchar_count((int)val + '0', 1);
+			val -= (int)val;
 		}
-		count += (opts->spec == 'e' || opts->spec == 'E') ? \
-				f_print_e_pow(opts) : 0;
-		return (count);
 	}
-	if ((opts->flags & 12) && val >= 0)
-		return (opts->flags & 8) ? \
-		f_putchar_count('+', 1) : f_putchar_count(' ', 1);
-	return (val < 0) ? f_putchar_count('-', 1) : 0;
+	count += (opts->spec == 'e' || opts->spec == 'E') ? \
+			f_print_e_pow(opts) : 0;
+	return (count);
 }
 
 static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
@@ -77,7 +70,7 @@ static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
 	int			spaces;
 
 	count = 0;
-	count += f_print_sign_fract(val, opts, 's');
+	count += f_print_sign(opts, val);
 	spaces = (opts->prec) ? opts->width - count - len - opts->prec - 1 : \
 			opts->width - len - count;
 	spaces -= ((opts->flags & 2) && (opts->prec == 0)) ? 1 : 0;
@@ -85,7 +78,7 @@ static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
 	if (opts->flags & 16)
 	{
 		count += f_putstr_count(s, 1);
-		count += f_print_sign_fract(val, opts, 'f');
+		count += f_print_fract(opts, val);
 		while (spaces-- > 0)
 			count += f_putchar_count(' ', 1);
 	}
@@ -94,7 +87,7 @@ static int			f_flag_minus_zero(t_opts *opts, char *s, long double val, \
 		while (spaces-- > 0)
 			count += f_putchar_count('0', 1);
 		count += f_putstr_count(s, 1);
-		count += f_print_sign_fract(val, opts, 'f');
+		count += f_print_fract(opts, val);
 	}
 	return (count);
 }
@@ -113,9 +106,9 @@ static int			f_other_cases(t_opts *opts, char *s, long double val, \
 	spaces -= (opts->spec == 'e' || opts->spec == 'E') ? 4 : 0;
 	while (spaces-- > 0)
 		count += f_putchar_count(' ', 1);
-	count += f_print_sign_fract(val, opts, 's');
+	count += f_print_sign(opts, val);
 	count += f_putstr_count(s, 1);
-	count += f_print_sign_fract(val, opts, 'f');
+	count += f_print_fract(opts, val);
 	return (count);
 }
 

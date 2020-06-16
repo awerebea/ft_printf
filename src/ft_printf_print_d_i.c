@@ -6,20 +6,12 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/29 13:29:10 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/14 17:05:48 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/16 14:53:14 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_printf.h"
-
-static int		f_print_sign(t_opts *opts, ssize_t val)
-{
-	if ((opts->flags & 12) && val >= 0)
-		return (opts->flags & 8) ? \
-		f_putchar_count('+', 1) : f_putchar_count(' ', 1);
-	return (val < 0) ? f_putchar_count('-', 1) : 0;
-}
 
 static int		f_flag_minus_zero(t_opts *opts, char *s, ssize_t val, int len)
 {

@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 00:25:59 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/16 00:49:20 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:38:30 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ size_t			f_check_u_o_x_subspec(va_list ap, t_opts *opts)
 	else
 		val = va_arg(ap, unsigned int);
 	return (val);
+}
+
+int				f_print_sign(t_opts *opts, long double val)
+{
+	if ((opts->flags & 12) && val >= 0)
+		return (opts->flags & 8) ? \
+		f_putchar_count('+', 1) : f_putchar_count(' ', 1);
+	return (val < 0) ? f_putchar_count('-', 1) : 0;
 }
 
 char			f_isspec(const char *format, int *i, t_opts *opts)

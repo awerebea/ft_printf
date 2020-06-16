@@ -6,7 +6,7 @@
 /*   By: awerebea <awerebea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 16:26:06 by awerebea          #+#    #+#             */
-/*   Updated: 2020/06/16 00:47:10 by awerebea         ###   ########.fr       */
+/*   Updated: 2020/06/16 15:38:17 by awerebea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ size_t			f_check_u_o_x_subspec(va_list ap, t_opts *opts);
 int				f_print_float_scientific(va_list ap, t_opts *opts);
 int				f_print_percent(t_opts *opts);
 int				f_print_e_pow(t_opts *opts);
+int				f_print_sign(t_opts *opts, long double val);
 int				f_putchar_count(char c, int fd);
 int				f_putstr_count(char *s, int fd);
 int				f_save_count_printed(va_list ap, t_opts *opts);
